@@ -122,3 +122,8 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if [ -f $HOME/.tmux/plugins/tpm/bin/install_plugins ]; then
+  $HOME/.tmux/plugins/tpm/bin/install_plugins > /dev/null
+  $HOME/.tmux/plugins/tpm/bin/update_plugins all > /dev/null
+fi

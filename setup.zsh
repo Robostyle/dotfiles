@@ -32,6 +32,11 @@ setup_tmux_configs()
 
     [ -d $HOME/.tmuxp ] && rm -rf $HOME/.tmuxp
     ln -sf ${root}/.tmuxp $HOME/.tmuxp
+
+    # install tpm plugin manager
+    git clone https://github.com/tmux-plugins/tpm ${root}/.tmux/plugins/tpm
+    ln -sf ${root}/.tmux $HOME/.tmux
+}
 }
 
 setup_zplug()
