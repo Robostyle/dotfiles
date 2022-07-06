@@ -20,6 +20,7 @@ setup_zsh_configs()
 {
     ln -sf ${root}/.zshrc $HOME/.zshrc
     ln -sf ${root}/.p10k.zsh $HOME/.p10k.zsh
+    ln -sf ${root}/.zsh_aliases $HOME/.zsh_aliases
     
     # point .zplug home to correct location
     sed "s@%%PLACEHOLDER_zplughome%%@$ZPLUG_HOME@g" ${root}/.zshenv > $HOME/.zshenv
