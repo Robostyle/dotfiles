@@ -25,6 +25,14 @@ setup_zsh_configs()
     sed "s@%%PLACEHOLDER_zplughome%%@$ZPLUG_HOME@g" ${root}/.zshenv > $HOME/.zshenv
 }
 
+setup_tmux_configs()
+{
+    ln -sf ${root}/.tmux.conf $HOME/.tmux.conf
+
+    [ -d $HOME/.tmuxp ] && rm -rf $HOME/.tmuxp
+    ln -sf ${root}/.tmuxp $HOME/.tmuxp
+}
+
 setup_zplug()
 {
     [ -d $ZPLUG_HOME ] && rm -rf $ZPLUG_HOME
@@ -150,6 +158,11 @@ execute \
     --title \
     "Setup zsh config files" \
     "setup_zsh_configs"
+
+execute \
+    --title \
+    "Setup tmux/tmuxp config files" \
+    "setup_tmux_configs"
 
 execute \
     --title \

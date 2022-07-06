@@ -9,7 +9,7 @@ windows:
       - null
       - shell_command:
         - cthardknott
-        - cd /workspaces/gca
+        - cd /workspaces/codec_firmware_root
         - source setup-environment build-ithaca
 
 
