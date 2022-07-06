@@ -37,6 +37,11 @@ setup_tmux_configs()
     git clone https://github.com/tmux-plugins/tpm ${root}/.tmux/plugins/tpm
     ln -sf ${root}/.tmux $HOME/.tmux
 }
+
+setup_alacritty_configs()
+{
+    [ -d $HOME/.config/alacritty ] && rm -rf $HOME/.config/alacritty
+    ln -sf ${root}/config/alacritty $HOME/.config/alacritty
 }
 
 setup_zplug()
@@ -169,6 +174,11 @@ execute \
     --title \
     "Setup tmux/tmuxp config files" \
     "setup_tmux_configs"
+
+execute \
+    --title \
+    "Setup alacritty config files" \
+    "setup_alacritty_configs"
 
 execute \
     --title \
