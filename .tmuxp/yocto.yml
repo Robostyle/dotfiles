@@ -1,0 +1,15 @@
+session_name: yocto development
+start_directory: $HOME/devel
+
+windows:
+  - window_name: yocto development
+    layout: tiled
+    panes:
+      - picocom -b 115200 /dev/ttyUSB0
+      - null
+      - shell_command:
+        - cthardknott
+        - cd /workspaces/gca
+        - source setup-environment build-ithaca
+
+
