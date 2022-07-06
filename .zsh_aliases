@@ -11,6 +11,8 @@ alias ctdecoder='run_docker siqura/buildtools:5.0'
 alias ctzeus="run_docker ${extra_yocto_args} yocto/zeus"
 alias cthardknott="run_docker ${extra_yocto_args} yocto/hardknott"
 
+alias git_authors="git for-each-ref --format='%(objecttype);%(refname);%(committername);%(committerdate)' --sort=committer refs/remotes/origin/"
+
 run_docker() {
     if [ $# -lt 1 ]; then
         echo "Not enough arguments, usage: run_docker [options] <image>[:<tag>]"
