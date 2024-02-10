@@ -1,22 +1,25 @@
-##
-## Configuration
-##
+#!/bin/zsh
+#
+# .zshrc - Zsh file loaded on interactive shell sessions.
+#
 
-while read file
-do
-    source "$ZDOTDIR/$file.zsh"
-done <<-EOF
-env
-aliases
-utility
-options
-plugins
-key-bindings
-prompt
-EOF
+# Zsh options.
+setopt extended_glob
 
-if [[ -f "$ZDOTDIR/utility-work.zsh" ]]; then
-    source "$ZDOTDIR/utility-work.zsh"
-fi
+# Autoload functions you might want to use with antidote.
+ZFUNCDIR=${ZFUNCDIR:-$ZDOTDIR/functions}
+fpath=($ZFUNCDIR $fpath)
+autoload -Uz $fpath[1]/*(.:t)
 
-# vim: ft=zsh ts=4 sw=4 expandtab nowrap
+# Source zstyles you might use with antidote.
+[[ -e ${ZDOTDIR:-~}/.zstyles ]] && source ${ZDOTDIR:-~}/.zstyles
+
+# Clone antidote if necessary.
+[[ -d ${ZDOTDIR:-~}/.antidote ]] ||
+  git clone https://github.com/mattmc3/antidote ${ZDOTDIR:-~}/.antidote
+
+# Create an amazing Zsh config using antidote plugins.
+source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+antidote load
+
+eval "$(starship init zsh)"

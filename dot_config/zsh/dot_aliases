@@ -1,18 +1,27 @@
-##
-## Aliases
-##
+#!/bin/zsh
+#
+# .aliases - Set whatever shell aliases you want.
+#
 
-# extra arguments for containers
-extra_ssh_args="-v $HOME/.ssh:/home/vscode/.ssh"
-extra_yocto_args="-v devcontainer_home:/home ${extra_ssh_args}"
+# single character aliases - be sparing!
+alias _=sudo
+alias l=ls
+alias g=git
 
+# mask built-ins with better defaults
+alias vi=nvim
+
+# more ways to ls
 alias ls="exa --color=auto --icons"
+alias ll='ls -lh'
+alias la='ls -lAh'
+alias ldot='ls -ld .*'
 alias l="ls -l"
-alias la="ls -a"
-alias lla="ls -la"
 alias lt="ls --tree"
 
-alias grep="grep --color=auto"
+# fix common typos
+alias quit='exit'
+alias cd..='cd ..'
 
 # git Aliases
 #
@@ -22,14 +31,7 @@ alias git_authors="git for-each-ref --format='%(objecttype);%(refname);%(committ
 alias gst="git status"
 alias lg="lazygit"
 
-# board development
-#
-alias ctembedded='run_docker siqura/buildtools:1.1'
-alias ctembedded2012='run_docker siqura/buildtools:3.4'
-alias cthardknott="run_docker ${extra_yocto_args} yocto/hardknott"
-
-alias board_devel="tmuxp load yocto"
-
+# More sensible directory back
 alias ..="cd .."
 alias ..2="cd ../.."
 alias ..3="cd ../../.."
@@ -38,10 +40,18 @@ alias ..5="cd ../../../../.."
 alias ..6="cd ../../../../../.."
 alias ..7="cd ../../../../../../.."
 
-alias sudo='sudo '
+# tar
+alias tarls="tar -tvf"
+alias untar="tar -xf"
 
+# find
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+
+# pacman (yay)
 alias yeet='yay -Rcs'
 
+# chezmoi
 alias cma='chezmoi add'
 alias cmapply='chezmoi apply'
 alias cmcd='chezmoi cd'
@@ -51,6 +61,11 @@ alias cme='chezmoi edit'
 alias cmra='chezmoi re-add'
 alias cmup='chezmoi doctor'
 
+# misc
+alias please=sudo
+alias zshrc='${EDITOR:-vim} "${ZDOTDIR:-$HOME}"/.zshrc'
+alias zbench='for i in {1..10}; do /usr/bin/time zsh -lic exit; done'
+alias zdot='cd ${ZDOTDIR:-~}'
+alias grep="grep --color=auto"
 
 # vim:expandtab:ts=4:sw=4
-
