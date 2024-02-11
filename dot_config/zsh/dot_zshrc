@@ -22,4 +22,5 @@ autoload -Uz $fpath[1]/*(.:t)
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 antidote load
 
+export STARSHIP_CONFIG=${XDG_CONFIG_HOME}/starship/starship.toml
 eval "$(starship init zsh)"
