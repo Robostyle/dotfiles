@@ -1,0 +1,16 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+{{ if eq .osid "linux-arch" }}
+{{ $list := "" }}
+{{ range .packages.linux.arch -}}
+    {{ $list = printf "%s %s" $list (. | quote) }}
+{{ end -}}
+    echo Arch linux package install {{ $list }}
+    sudo pacman -S --noconfirm  {{ $list }}
+{{ else }}
+
+
+{{ end }}
+
+{{ end -}}

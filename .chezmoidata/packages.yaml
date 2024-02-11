@@ -1,0 +1,14 @@
+packages:
+  linux:
+    arch:
+      - 'exa'
+      - 'fd'
+      - 'fzf'
+      - 'lazygit'
+      - 'ripgrep'
+      - 'tmux'
+      - 'ttf-jetbrains-mono-nerd'
+      - 'yazi'
+      - 'yazi'
+      - 'zoxide'
+
