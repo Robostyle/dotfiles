@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+##? gst-launch - launches gstreamer connecting to a RTSP stream.
+# arg1 ip address
+# arg2 (optional) different media url
+
+local arg_count=$#
+if [ $arg_count -lt 1 ]; then
+    echo "Need ip address of RTSP source"
+elif [ $arg_count -eq 1 ]; then
+    gst-launch-1.0 playbin uri=rtsp://$1/video-1.encoder-1 uridecodebin0::source::latency=100 video-sink="fpsdisplaysink"
+else
+    gst-launch-1.0 -vvv playbin uri=rtsp://$1/$2 uridecodebin0::source::latency=100 video-sink="fpsdisplaysink"
+fi
+
+# vim: ft=zsh ts=4 sw=4 expandtab

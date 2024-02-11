@@ -1,4 +1,5 @@
 #!/bin/zsh
+##? ya - Yazi file manager shell wrapper that provides the ability to change the current working directory when exiting.
 
 local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
 yazi "$@" --cwd-file="$tmp"

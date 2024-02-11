@@ -1,0 +1,6 @@
+#!/bin/zsh
+##? zsudo - performs a sudo on an zsh alias/function.
+
+sudo zsh -c "$functions[$1]" "$@"
+
+# vim: ft=zsh ts=4 sw=4 expandtab
