@@ -1,6 +1,6 @@
 #!/bin/sh
 
-local tpm_dir="$HOME/.tmux/plugins/tpm"
+tpm_dir="$HOME/.tmux/plugins/tpm"
 
 if [ ! -d "${tpm_dir}" ]; then
 	echo "installing Tmux Package Manager (TPM)"
