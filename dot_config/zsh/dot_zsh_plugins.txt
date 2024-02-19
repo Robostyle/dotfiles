@@ -21,7 +21,7 @@ zsh-users/zsh-completions path:src kind:fpath
 
 ### Regular Plugins
 ###
-https://github.com/peterhurford/up.zsh
+peterhurford/up.zsh
 rummik/zsh-tailf
 mattmc3/zman
 
@@ -85,7 +85,7 @@ zdharma-continuum/fast-syntax-highlighting kind:defer
 ###
 
 MichaelAquilina/zsh-you-should-use kind:defer
-zdharma-continuum/history-search-multi-word kind:defer
+zdharma-continuum/history-search-multi-word
 junegunn/fzf path:shell/completion.zsh
 junegunn/fzf path:shell/key-bindings.zsh
 
