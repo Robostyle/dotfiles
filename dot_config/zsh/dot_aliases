@@ -14,7 +14,7 @@ alias vi=nvim
 # more ways to ls
 alias ls="exa --color=auto --icons"
 alias ll='ls -lh'
-alias la='ls -lAh'
+alias la='ls -lah'
 alias ldot='ls -ld .*'
 alias l="ls -l"
 alias lt="ls --tree"
