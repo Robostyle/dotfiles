@@ -12,12 +12,21 @@ alias g=git
 alias vi=nvim
 
 # more ways to ls
-alias ls="exa --color=auto --icons"
-alias ll='ls -lh'
-alias la='ls -lah'
-alias ldot='ls -ld .*'
-alias l="ls -l"
-alias lt="ls --tree"
+
+eza_params=(
+    '--git' '--icons' '--group' '--group-directories-first'
+    '--time-style=long-iso' '--color-scale=all'
+)
+
+alias ls='eza $eza_params'
+alias l='eza --git-ignore $eza_params'
+alias ll='eza --all --header --long $eza_params'
+alias llm='eza --all --header --long --sort=modified $eza_params'
+alias la='eza -lbhHigUmuSa'
+alias lx='eza -lbhHigUmuSa@'
+alias lt='eza --tree $eza_params'
+alias tree='eza --tree $eza_params'
+alias ldot='eza -ld .*'
 
 # fix common typos
 alias quit='exit'
