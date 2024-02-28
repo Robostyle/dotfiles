@@ -59,7 +59,6 @@ belak/zsh-utils path:history
 belak/zsh-utils path:utility
 belak/zsh-utils path:editor
 
-Aloxaf/fzf-tab
 
 ### Deferred Plugins
 #
@@ -90,6 +89,7 @@ zdharma-continuum/history-search-multi-word
 junegunn/fzf path:shell/completion.zsh
 junegunn/fzf path:shell/key-bindings.zsh
 
+Aloxaf/fzf-tab
 
 # These popular core plugins should be loaded at the end
 zsh-users/zsh-autosuggestions
