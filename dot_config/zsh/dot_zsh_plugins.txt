@@ -26,11 +26,6 @@ rummik/zsh-tailf
 mattmc3/zman
 
 
-### Local Plugins
-###
-$ZDOTDIR/.aliases
-
-
 ### Utilities
 #
 # Utilities aren't traditional Zsh plugins - they aren't sourced Zsh scripts. Instead
@@ -58,6 +53,11 @@ ohmyzsh/ohmyzsh path:plugins/fancy-ctrl-z
 belak/zsh-utils path:history
 belak/zsh-utils path:utility
 belak/zsh-utils path:editor
+
+
+### Local Plugins
+###
+$ZDOTDIR/.aliases
 
 
 ### Deferred Plugins
