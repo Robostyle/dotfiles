@@ -1,8 +1,12 @@
 {
   "extras": [
+    "lazyvim.plugins.extras.coding.codeium",
+    "lazyvim.plugins.extras.coding.yanky",
     "lazyvim.plugins.extras.editor.aerial",
     "lazyvim.plugins.extras.editor.navic",
-    "lazyvim.plugins.extras.lang.clangd"
+    "lazyvim.plugins.extras.lang.clangd",
+    "lazyvim.plugins.extras.lang.go",
+    "lazyvim.plugins.extras.lang.tailwind"
   ],
   "news": {
     "NEWS.md": "2123"
