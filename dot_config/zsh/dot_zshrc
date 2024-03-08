@@ -30,5 +30,7 @@ eval "$(zoxide init zsh)"
 # GO lang
 export PATH=$PATH:"$(go env GOPATH)/bin"
 
-# bun completions
-[ -s "/Users/robertsuijker/.bun/_bun" ] && source "/Users/robertsuijker/.bun/_bun"
+# bun and completions
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
