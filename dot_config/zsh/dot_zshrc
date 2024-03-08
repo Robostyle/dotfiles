@@ -26,3 +26,9 @@ export STARSHIP_CONFIG=${XDG_CONFIG_HOME}/starship/starship.toml
 eval "$(starship init zsh)"
 
 eval "$(zoxide init zsh)"
+
+# GO lang
+export PATH=$PATH:"$(go env GOPATH)/bin"
+
+# bun completions
+[ -s "/Users/robertsuijker/.bun/_bun" ] && source "/Users/robertsuijker/.bun/_bun"
