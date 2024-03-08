@@ -7,6 +7,8 @@ return {
       "<leader>bh",
       function()
         require("harpoon"):list():append()
+        local Util = require("lazyvim.util")
+        Util.info("File '" .. vim.fn.expand("%") .. "' added", { title = "Harpoon" })
       end,
       desc = "Harpoon active file",
     },
@@ -29,7 +31,7 @@ return {
     },
 
     {
-      "<C-t>",
+      "<C-j>",
       function()
         require("harpoon"):list():select(2)
       end,
@@ -37,7 +39,7 @@ return {
     },
 
     {
-      "<C-n>",
+      "<C-k>",
       function()
         require("harpoon"):list():select(3)
       end,
@@ -45,7 +47,7 @@ return {
     },
 
     {
-      "<C-s>",
+      "<C-l>",
       function()
         require("harpoon"):list():select(4)
       end,
