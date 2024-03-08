@@ -2,17 +2,11 @@ return {
   "ThePrimeagen/harpoon",
   branch = "harpoon2",
 
-  init = function()
-    local harpoon = require("harpoon")
-    harpoon:setup({})
-  end,
-
   keys = {
     {
       "<leader>bh",
       function()
-        local harpoon = require("harpoon")
-        harpoon:list():append()
+        require("harpoon"):list():append()
       end,
       desc = "Harpoon active file",
     },
@@ -29,8 +23,7 @@ return {
     {
       "<C-h>",
       function()
-        local harpoon = require("harpoon")
-        harpoon:list():select(1)
+        require("harpoon"):list():select(1)
       end,
       desc = "Harpoon buf 1",
     },
@@ -38,8 +31,7 @@ return {
     {
       "<C-t>",
       function()
-        local harpoon = require("harpoon")
-        harpoon:list():select(2)
+        require("harpoon"):list():select(2)
       end,
       desc = "Harpoon buf 2",
     },
@@ -47,8 +39,7 @@ return {
     {
       "<C-n>",
       function()
-        local harpoon = require("harpoon")
-        harpoon:list():select(3)
+        require("harpoon"):list():select(3)
       end,
       desc = "Harpoon buf 3",
     },
@@ -56,8 +47,7 @@ return {
     {
       "<C-s>",
       function()
-        local harpoon = require("harpoon")
-        harpoon:list():select(4)
+        require("harpoon"):list():select(4)
       end,
       desc = "Harpoon buf 4",
     },
