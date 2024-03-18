@@ -28,7 +28,9 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 # GO lang
-export PATH=$PATH:"$(go env GOPATH)/bin"
+if [ -x "$(command -v go)" ]; then
+    export PATH=$PATH:"$(go env GOPATH)/bin"
+fi
 
 # bun and completions
 export BUN_INSTALL="$HOME/.bun"
