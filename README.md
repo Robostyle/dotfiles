@@ -1,3 +1,42 @@
+# Dependencies
+
+For **zsh** the following tools/utilities need to be installed.
+
+Linux distro independent:
+
+## Starship
+
+The minimal, blazing-fast, and infinitely customizable prompt for any shell!
+
+`curl -sS https://starship.rs/install.sh | sh -s --bin-dir ~/.localbin`
+
+## eza
+
+A modern, maintained replacement for ls.
+
+`wget -qc https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz -O - | tar xz -C ~/.local/bin`
+
+## fzf
+
+A general-purpose command-line fuzzy finder.
+
+`wget -qc https://github.com/junegunn/fzf/releases/latest/download/fzf-0.46.1-linux_amd64.tar.gz -O - | tar xz -C ~/.local/bin`
+
+## Zoxide
+
+zoxide is a smarter cd command, inspired by z and autojump.
+
+`curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash`
+
+## Yazi
+
+Blazing fast terminal file manager written in Rust, based on async I/O.
+
+```
+wget -qO- https://github.com/sxyazi/yazi/releases/download/v0.2.3/yazi-x86_64-unknown-linux-gnu.zip | bsdtar -xf- --acls -C /tmp && mv /tmp/yazi-x86_64-unknown-linux-gnu/yazi ~/.local/bin && chmod +x ~/.local/bin/yazi
+```
+
+
 # System
 
 I run Arch Linux (or on some machines Manjaro). The list of minimal packages I have installed as a base system:
@@ -47,6 +86,14 @@ pacman -S chezmoi eza lazygit neovim ranger ripgrep tig tmux yay zsh \
     hyprpaper imagemagick mako polkit-kde-agent rofi swayidle \
     swaylock-effects-git thunar waybar wireplumber wl-clipboard \
     wlogout xdg-desktop-portal-hyprland ttf-jetbrains-mono-nerd
+```
+
+> [!IMPORTANT]
+>
+> Some other utilities I use
+
+```shell
+pacman -S glow
 ```
 
 
