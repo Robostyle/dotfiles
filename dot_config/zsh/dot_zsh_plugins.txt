@@ -4,37 +4,21 @@
 #
 
 ### Completions
-#
-# You may want to add some additional completions to Zsh. Completions look in your fpath
-# for completion functions, which are functions named with a leading underscore
-# (eg: _git). You need to add all supplemental completions to your fpath prior to
-# running `compinit` to use completions functionality properly. You will want to find
-# a completion plugin that runs `compinit` for you, or you can run it yourself in
-# your .zshrc after antidote loads like this:
-#
-#   autoload -Uz compinit && compinit
-#
-###
+####
 mattmc3/zephyr path:plugins/completion
 zsh-users/zsh-completions path:src kind:fpath
 
 
 ### Regular Plugins
-###
+####
 peterhurford/up.zsh
 rummik/zsh-tailf
 mattmc3/zman
 
 
 ### Utilities
-#
-# Utilities aren't traditional Zsh plugins - they aren't sourced Zsh scripts. Instead
-# they provide commands that can be executed from your terminal session. One good
-# example is zsh-bench, which is a utility that benchmarks your Zsh config. Utility
-# bundles can often be made available simply with the `kind:path` annotation.
-#
-###
-romkatv/zsh-bench kind:path
+####
+# romkatv/zsh-bench kind:path
 
 
 ### Framework: Oh-My-Zsh
@@ -44,7 +28,6 @@ ohmyzsh/ohmyzsh path:plugins/copybuffer
 ohmyzsh/ohmyzsh path:plugins/copyfile
 ohmyzsh/ohmyzsh path:plugins/copypath
 ohmyzsh/ohmyzsh path:plugins/extract
-ohmyzsh/ohmyzsh path:plugins/magic-enter
 ohmyzsh/ohmyzsh path:plugins/fancy-ctrl-z
 
 
@@ -60,20 +43,8 @@ belak/zsh-utils path:editor
 $ZDOTDIR/.aliases
 
 
-### Deferred Plugins
-#
-# Antidote allows you to defer loading plugins. This is similar to concepts like "turbo
-# mode" in other plugin managers. Antidote handles deferring plugins by leveraging
-# romkatv/zsh-defer, which "defers execution of a zsh command until zsh has nothing else
-# to do and is waiting for user input". In general, you should not defer plugins unless
-# you know for sure they properly support deferred loading, and there are no adverse
-# side-effects (see: https://github.com/romkatv/zsh-defer#Caveats). However, for
-# certain plugins, this can greatly increase your zsh startup speed.
-#
-###
-
 # Syntax highlighting
-#zsh-users/zsh-syntax-highlighting kind:defer
+###
 zdharma-continuum/fast-syntax-highlighting kind:defer
 
 
@@ -95,5 +66,7 @@ Aloxaf/fzf-tab
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-history-substring-search
 
+
+$ZDOTDIR/.key-bindings
 
 # vim:expandtab:ts=4:sw=4
