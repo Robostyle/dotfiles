@@ -158,7 +158,7 @@
     "max-volume": 150,
     "scroll-step": 0.5,
     "format-icons": ["", "", ""],
-    "on-click": "hyprctl dispatch exec '[float;size 70% 70%;center]' /usr/bin/pavucontrol",
+    "on-click": "hyprctl dispatch exec /usr/bin/pavucontrol",
   },
 
   "custom/pacman": {
