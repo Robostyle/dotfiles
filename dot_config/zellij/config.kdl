@@ -333,12 +333,26 @@ themes {
     black "#181825" // Mantle
     white "#cdd6f4"
   }
+
+  habamax {
+    bg "#767676"
+    fg "#bcbcbc"
+    red "#d7875f"
+    green "#afd7af"
+    blue "#87afd7"
+    yellow "#d7d787"
+    magenta "#d7afd7"
+    orange "#afaf87"
+    cyan "#87afaf"
+    black "#1c1c1c"
+    white "#bcbcbc"
+  }
 }
 
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-theme "catppuccin-mocha"
+theme "habamax"
 
 // The name of the default layout to load on startup
 // Default: "default"
