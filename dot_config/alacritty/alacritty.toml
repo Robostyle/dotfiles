@@ -1,4 +1,4 @@
-import = ["/home/rsuijker/.config/alacritty/catppuccin/catppuccin-frappe.toml"]
+import = ["/home/rsuijker/.config/alacritty/habamax/habamax.toml"]
 
 [env]
 TERM = "xterm-256color"
