@@ -5,6 +5,11 @@ return {
   },
 
   {
+    "ntk148v/habamax.nvim",
+    dependencies = { "rktjmp/lush.nvim" },
+  },
+
+  {
     "catppuccin/nvim",
     name = "catppuccin",
     flavour = "frappe",
@@ -47,12 +52,12 @@ return {
         which_key = true,
       },
     },
+  },
 
-    {
-      "LazyVim/LazyVim",
-      opts = {
-        colorscheme = "catppuccin",
-      },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "habamax",
     },
   },
 }
