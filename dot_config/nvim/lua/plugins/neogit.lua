@@ -3,8 +3,8 @@ return {
 
   dependencies = {
     "nvim-lua/plenary.nvim", -- required
-    "nvim-telescope/telescope.nvim", -- optional
-    "sindrets/diffview.nvim", -- optional
+    "sindrets/diffview.nvim", -- optional - Diff integration
+
     "ibhagwan/fzf-lua", -- optional
   },
 
@@ -19,6 +19,7 @@ return {
   },
 
   keys = {
-    { "<leader>gn", [[<Cmd>lua require"neogit".open({ kind = "auto" })<CR>]], desc = "Neogit" },
+    { "<leader>nn", [[<Cmd>lua require"neogit".open({ kind = "auto" })<CR>]], desc = "Neogit" },
+    { "<leader>nv", [[<Cmd>lua require"neogit".open({ kind = "split_below" })<CR>]], desc = "Neogit" },
   },
 }
