@@ -3,27 +3,30 @@
 ############ Variables ############
 enable_battery=false
 battery_charging=false
+path_power_supply=/sys/class/power_supply/
+battery=${path_power_supply}BAT0
+
+#         crit 10  20  30  40  50  60  70  80  90  100 %
+bat_icons=('󰂃' '󰁺' '󰁻' '󰁼' '󰁽' '󰁾' '󰁿' '󰂀' '󰂁' '󰂂' '󰁹')
 
 ####### Check availability ########
-for battery in /sys/class/power_supply/*BAT*; do
-    if [[ -f "$battery/uevent" ]]; then
-        enable_battery=true
-        if [[ $(cat /sys/class/power_supply/*/status | head -1) == "Charging" ]]; then
-            battery_charging=true
-        fi
-        break
+if [[ -f "$battery/uevent" ]]; then
+    enable_battery=true
+    if [[ $(cat $battery/status) == "Charging" ]]; then
+        battery_charging=true
     fi
-done
+fi
 
 ############# Output #############
 if [[ $enable_battery == true ]]; then
     if [[ $battery_charging == true ]]; then
-        echo -n "(+) "
+        echo -n "󰂄 "
+    else
+        level=$(cat ${battery}/capacity)
+        index=$(($level / 10))
+        echo -n "${bat_icons[$index]} "
     fi
-    echo -n "$(cat /sys/class/power_supply/*/capacity | head -1)"%
-    if [[ $battery_charging == false ]]; then
-        echo -n " remaining"
-    fi
+    echo -n "$level"%
 fi
 
 echo ''
