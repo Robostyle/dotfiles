@@ -1,4 +1,3 @@
-import = ["/home/rsuijker/.config/alacritty/habamax/habamax.toml"]
 
 [env]
 TERM = "xterm-256color"
@@ -11,3 +10,6 @@ family = "JetBrainsMono Nerd Font"
 
 [window]
 opacity = 0.7
+
+[general]
+import = ["/home/rsuijker/.config/alacritty/habamax/habamax.toml"]
