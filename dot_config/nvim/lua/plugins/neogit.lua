@@ -19,7 +19,7 @@ return {
   },
 
   keys = {
-    { "<leader>nn", [[<Cmd>lua require"neogit".open({ kind = "auto" })<CR>]], desc = "Neogit" },
-    { "<leader>nv", [[<Cmd>lua require"neogit".open({ kind = "split_below" })<CR>]], desc = "Neogit" },
+    { "<leader>gn", [[<Cmd>lua require"neogit".open({ kind = "auto" })<CR>]], desc = "Neogit" },
+    { "<leader>gN", [[<Cmd>lua require"neogit".open({ kind = "split_below" })<CR>]], desc = "Neogit" },
   },
 }
