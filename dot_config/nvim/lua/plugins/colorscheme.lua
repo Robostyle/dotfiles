@@ -1,10 +1,5 @@
 return {
   {
-    "Mofiqul/dracula.nvim",
-    priority = 1000,
-  },
-
-  {
     "ntk148v/habamax.nvim",
     dependencies = { "rktjmp/lush.nvim" },
   },
@@ -57,7 +52,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "habamax",
+      colorscheme = "catppuccin",
     },
   },
 }
