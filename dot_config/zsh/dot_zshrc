@@ -37,4 +37,7 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
-/usr/bin/neofetch
+[ -s "/usr/bin/neofetch" ] && /usr/bin/neofetch
+
+# bun completions
+[ -s "/home/rsuijker/.bun/_bun" ] && source "/home/rsuijker/.bun/_bun"
