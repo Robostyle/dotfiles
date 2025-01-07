@@ -1,0 +1,16 @@
+font-family = Monaspace Neon
+font-family-italic = Monaspace Radon
+font-family-bold-italic = Monaspace Radon
+
+# Feature for the Monaspace font, adapt when changing the font family
+font-feature = calt
+font-feature = liga
+font-feature = ss01
+font-feature = ss02
+font-feature = ss03
+font-feature = ss04
+
+window-decoration = false
+
+theme = catppuccin-mocha
+
