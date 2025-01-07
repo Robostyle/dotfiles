@@ -10,9 +10,9 @@ return {
     vendors = {
       ollama = {
         ["local"] = true,
-        endpoint = "10.1.0.106:11434/v1",
+        endpoint = "10.1.0.109:11434/v1",
         -- model = "nemotron:latest",
-        model = "qwen2.5-coder:32b",
+        model = "qwen2.5-coder:14b",
         -- model = "codegeex4",
 
         parse_curl_args = function(opts, code_opts)
