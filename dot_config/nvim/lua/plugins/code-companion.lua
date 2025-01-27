@@ -6,23 +6,51 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
+
+    {
+      "saghen/blink.cmp",
+      -- @module 'blink.cmp'
+      -- @type blink.cmp.Config
+      opts = {
+        sources = {
+          default = { "codecompanion" },
+          providers = {
+            codecompanion = {
+              name = "CodeCompanion",
+              module = "codecompanion.providers.completion.blink",
+              enabled = true,
+            },
+          },
+        },
+      },
+      opts_extends = {
+        "sources.default",
+      },
+    },
   },
 
   -- Plugin setup and configuration
   config = true,
   opts = {
     strategies = {
+      slash_commands = {
+        opts = {},
+      },
       chat = { adapter = "llama3" },
       inline = { adapter = "llama3" },
     },
 
     adapters = {
       llama3 = function()
-        print("hello")
         return require("codecompanion.adapters").extend("ollama", {
-          name = "llama3",
           schema = {
             model = { default = "deepseek-r1:32b" },
+          },
+          num_ctx = {
+            default = 16384,
+          },
+          num_predict = {
+            default = -1,
           },
           env = {
             url = "http://100.81.18.112:11434", -- API. endpoint
