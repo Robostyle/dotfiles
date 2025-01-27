@@ -2,6 +2,8 @@ font-family = Monaspace Neon
 font-family-italic = Monaspace Radon
 font-family-bold-italic = Monaspace Radon
 
+font-size = 10
+
 # Feature for the Monaspace font, adapt when changing the font family
 font-feature = calt
 font-feature = liga
