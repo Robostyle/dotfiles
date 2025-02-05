@@ -63,6 +63,7 @@ return {
   -- Add keybindings section to enable chat toggling
   keys = {
     { "<leader>ac", ":CodeCompanionChat toggle<cr>", desc = "Toggle Code Companion chat" },
-    { "<leader>aa", mode = { "v" }, ":CodeCompanion<cr>", desc = "Inline Code Companion " },
+    { "<leader>aa", ":CodeCompanionActions<cr>", desc = "Toggle Code Companion chat" },
+    { "<leader>ai", mode = { "v" }, ":CodeCompanion<cr>", desc = "Inline Code Companion " },
   },
 }
