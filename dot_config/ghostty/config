@@ -12,6 +12,15 @@ font-feature = ss02
 font-feature = ss03
 font-feature = ss04
 
+background-opacity = 0.8
+
+cursor-color = #aaaaaa
+cursor-opacity = 0.7
+cursor-text = #555555
+cursor-style = bar
+cursor-style-blink = true
+shell-integration-features = no-cursor
+
 window-decoration = false
 
 theme = catppuccin-mocha
