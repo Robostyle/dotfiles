@@ -10,11 +10,9 @@ vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decr
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
-local foldIcon = ""
-local hlgroup = "NonText"
 local function foldTextFormatter(virtText, lnum, endLnum, width, truncate)
   local newVirtText = {}
-  local suffix = "  " .. foldIcon .. "  " .. tostring(endLnum - lnum)
+  local suffix = (" 󰁂 %d "):format(endLnum - lnum)
   local sufWidth = vim.fn.strdisplaywidth(suffix)
   local targetWidth = width - sufWidth
   local curWidth = 0
@@ -28,6 +26,7 @@ local function foldTextFormatter(virtText, lnum, endLnum, width, truncate)
       local hlGroup = chunk[2]
       table.insert(newVirtText, { chunkText, hlGroup })
       chunkWidth = vim.fn.strdisplaywidth(chunkText)
+      -- str width returned from truncate() may less than 2nd argument, need padding
       if curWidth + chunkWidth < targetWidth then
         suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
       end
@@ -35,13 +34,14 @@ local function foldTextFormatter(virtText, lnum, endLnum, width, truncate)
     end
     curWidth = curWidth + chunkWidth
   end
-  table.insert(newVirtText, { suffix, hlgroup })
+  table.insert(newVirtText, { suffix, "MoreMsg" })
   return newVirtText
 end
 
 return {
   {
     "kevinhwang91/nvim-ufo",
+    enabled = true,
 
     dependencies = "kevinhwang91/promise-async",
 
@@ -62,7 +62,7 @@ return {
       close_fold_kinds_for_ft = {
         default = { "comment", "imports" },
         json = { "array" },
-        c = { "comment", "region" },
+        c = { "comment" },
       },
       open_fold_hl_timeout = 500,
       fold_virt_text_handler = foldTextFormatter,
