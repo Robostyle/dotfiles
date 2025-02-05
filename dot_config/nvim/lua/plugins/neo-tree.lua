@@ -1,21 +1,18 @@
-local Util = require("lazyvim/util")
-
 return {
   "nvim-neo-tree/neo-tree.nvim",
 
   keys = {
     {
-      "<leader>fe",
+      "<leader>e",
       function()
-        require("neo-tree.command").execute({ focus = true, dir = Util.root() })
+        require("neo-tree.command").execute({ position = "float", reveal = true, dir = LazyVim.root() })
       end,
-      desc = "Explorer NeoTree (root dir)",
     },
 
     {
-      "<leader>fE",
+      "<leader>E",
       function()
-        require("neo-tree.command").execute({ focus = true, dir = vim.loop.cwd() })
+        require("neo-tree.command").execute({ position = "float", reveal = true, dir = vim.uv.cwd() })
       end,
       desc = "Explorer NeoTree (cwd)",
     },
