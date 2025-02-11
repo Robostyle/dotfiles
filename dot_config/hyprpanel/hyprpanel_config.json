@@ -1,0 +1,76 @@
+{
+  "bar.customModules.updates.pollingInterval": 1440000,
+  "theme.font.name": "Monaspace Neon",
+  "theme.font.label": "Monaspace Neon",
+  "theme.font.size": "1rem",
+  "bar.layouts": {
+    "0": {
+      "left": [
+        "dashboard",
+        "hypridle",
+        "hyprsunset",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "cpu",
+        "cputemp",
+        "updates",
+        "volume",
+        "network",
+        "bluetooth",
+        "battery",
+        "systray",
+        "clock",
+        "notifications"
+      ]
+    },
+    "1": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "cpu",
+        "cputemp",
+        "volume",
+        "clock",
+        "notifications"
+      ]
+    },
+    "2": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "clock",
+        "notifications"
+      ]
+    }
+  },
+  "menus.power.lowBatteryNotification": true,
+  "bar.customModules.cpuTemp.sensor": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon3/temp1_input",
+  "menus.clock.time.military": true,
+  "theme.bar.floating": false,
+  "bar.battery.hideLabelWhenFull": false,
+  "bar.battery.label": true,
+  "bar.clock.format": "%a %b %d  %H:%M:%S",
+  "menus.media.hideAuthor": true,
+  "menus.media.hideAlbum": true,
+  "theme.bar.menus.opacity": 100,
+  "theme.bar.transparent": false,
+  "theme.bar.opacity": 55
+}
