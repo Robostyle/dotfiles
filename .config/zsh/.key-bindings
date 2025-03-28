@@ -1,0 +1,8 @@
+# history-substring-search plugin
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+
+# open 
+bindkey -s '^o' 'smooth_fzf^M'
+
+# vim: ft=zsh ts=4 sw=4 expandtab

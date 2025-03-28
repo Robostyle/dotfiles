@@ -1,0 +1,72 @@
+#!/bin/zsh
+#
+# .zsh_plugins.txt - antidote plugins file
+#
+
+### Completions
+####
+mattmc3/zephyr path:plugins/completion
+zsh-users/zsh-completions path:src kind:fpath
+
+
+### Regular Plugins
+####
+peterhurford/up.zsh
+rummik/zsh-tailf
+mattmc3/zman
+
+
+### Utilities
+####
+# romkatv/zsh-bench kind:path
+
+
+### Framework: Oh-My-Zsh
+####
+ohmyzsh/ohmyzsh path:lib/clipboard.zsh
+ohmyzsh/ohmyzsh path:plugins/copybuffer
+ohmyzsh/ohmyzsh path:plugins/copyfile
+ohmyzsh/ohmyzsh path:plugins/copypath
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/fancy-ctrl-z
+
+
+### Framework: zsh-utils
+###
+belak/zsh-utils path:history
+belak/zsh-utils path:utility
+belak/zsh-utils path:editor
+
+
+### Local Plugins
+###
+$ZDOTDIR/.aliases
+
+
+# Syntax highlighting
+###
+zdharma-continuum/fast-syntax-highlighting kind:defer
+
+
+### Final Plugins
+#
+# Remember plugin order matters! Put plugins that need run last at the bottom of your
+# .zsh_plugins.txt file.
+#
+###
+
+MichaelAquilina/zsh-you-should-use kind:defer
+zdharma-continuum/history-search-multi-word
+junegunn/fzf path:shell/completion.zsh
+junegunn/fzf path:shell/key-bindings.zsh
+
+Aloxaf/fzf-tab
+
+# These popular core plugins should be loaded at the end
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search
+
+
+$ZDOTDIR/.key-bindings
+
+# vim:expandtab:ts=4:sw=4

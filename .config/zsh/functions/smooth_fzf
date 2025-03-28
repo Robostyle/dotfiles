@@ -1,0 +1,9 @@
+#!/bin/zsh
+##? smooth_fzf - open fzf to config files
+
+local current_dir="$PWD"
+cd "${XDG_CONFIG_HOME:-~/.config}"
+local fname="$(fzf)" || return
+$EDITOR "$fname"
+cd "$current_dir"
+

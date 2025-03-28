@@ -1,0 +1,81 @@
+#!/bin/zsh
+#
+# .aliases - Set whatever shell aliases you want.
+#
+
+# single character aliases - be sparing!
+alias _=sudo
+alias l=ls
+
+# mask built-ins with better defaults
+alias vi=nvim
+
+# more ways to ls
+
+eza_params=(
+    '--git' '--icons' '--group' '--group-directories-first'
+    '--time-style=long-iso' '--color-scale=all'
+)
+
+if ! command -v eza 2>&1 >/dev/null; then
+    alias ls='eza $eza_params'
+    alias l='eza $eza_params'
+    alias ll='eza --all --header --long $eza_params'
+    alias llm='eza --all --header --long --sort=modified $eza_params'
+    alias la='eza -lbhHigUmuSa'
+    alias lx='eza -lbhHigUmuSa@'
+    alias lt='eza --tree $eza_params'
+    alias tree='eza --tree $eza_params'
+    alias ldot='eza -ld .*'
+fi
+
+# fix common typos
+alias quit='exit'
+alias cd..='cd ..'
+
+# git Aliases
+#
+alias cbr="git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff {1} --color=always" --pointer="" | xargs git checkout"
+alias gfa="git fetch --all -p"
+alias git_authors="git for-each-ref --format='%(objecttype);%(refname);%(committername);%(committerdate)' --sort=committer refs/remotes/origin/"
+alias gst="git status"
+alias lg="lazygit"
+
+# More sensible directory back
+alias ..="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+alias ..6="cd ../../../../../.."
+alias ..7="cd ../../../../../../.."
+
+# tar
+alias tarls="tar -tvf"
+alias untar="tar -xf"
+
+# find
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+
+# pacman (yay)
+alias yeet='yay -Rcs'
+
+# chezmoi
+alias cma='chezmoi add'
+alias cmapply='chezmoi apply'
+alias cmcd='chezmoi cd'
+alias cmdiff='chezmoi diff'
+alias cmdoc='chezmoi doctor'
+alias cme='chezmoi edit'
+alias cmra='chezmoi re-add'
+alias cmup='chezmoi doctor'
+
+# misc
+alias please=sudo
+alias zshrc='${EDITOR:-vim} "${ZDOTDIR:-$HOME}"/.zshrc'
+alias zbench='for i in {1..10}; do /usr/bin/time zsh -lic exit; done'
+alias zdot='cd ${ZDOTDIR:-~}'
+alias grep="grep --color=auto"
+
+# vim:expandtab:ts=4:sw=4
