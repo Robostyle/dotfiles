@@ -2,14 +2,6 @@
 	name = Robert Suijker
 	email = robert.suijker@gmail.com
 
-[safe]
-	directory = /home/rsuijker/work/codec_firmware_root
-	directory = /home/rsuijker/work/codec_firmware_root/.git
-	directory = /home/rsuijker/work/codec_firmware_root/sources/firmware
-	directory = /home/rsuijker/work/cfr_hardknott
-	directory = /home/rsuijker/work/cfr_hardknott/.git
-	directory = /home/rsuijker/work/_codec_firmware_root
-
 [color]
 	ui = auto
 
@@ -18,3 +10,26 @@
 
 [merge]
 	conflictStyle = zdiff3
+	tool = p4merge
+
+[diff]
+	tool = p4merge
+
+[alias]
+    l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+
+    b = branch
+    ba = branch -a
+    # list branches per author
+    bo = "!for branch in $(git branch -r | grep -v HEAD); do echo -e $(git show --format='%an @ %ai %ar' $branch | head -n1) \\t $branch; done | sort -r"
+
+    co = checkout
+    coi = !git checkout $(git branch | fzf)
+    coia = !git checkout $(git branch -a | fzf)
+    cob = checkout -b
+
+[fetch]
+    prune = true
+
+[includeIf "gitdir:~/work/"]
+    path = "~/.gitconfig_work"

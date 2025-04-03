@@ -1,0 +1,7 @@
+[user]
+    email = r.suijker@tkhsecurity.com
+
+[safe]
+	directory = /home/rsuijker/work/codec_firmware_root
+
+
