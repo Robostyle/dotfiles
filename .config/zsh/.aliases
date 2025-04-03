@@ -17,7 +17,7 @@ eza_params=(
     '--time-style=long-iso' '--color-scale=all'
 )
 
-if ! command -v eza 2>&1 >/dev/null; then
+if command -v eza 2>&1 >/dev/null; then
     alias ls='eza $eza_params'
     alias l='eza $eza_params'
     alias ll='eza --all --header --long $eza_params'
