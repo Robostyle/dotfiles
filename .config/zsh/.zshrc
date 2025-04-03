@@ -47,6 +47,10 @@ if command -v fastfetch 2>&1 >/dev/null; then
     /usr/bin/fastfetch
 fi
 
-if uwsm check may-start; then
-    exec uwsm start hyprland.desktop
+if [ "$(tty)" = "/dev/tty1" ]; then
+    if command -v uwsm 2>&1 >/dev/null; then
+        if uwsm check may-start; then
+            exec uwsm start hyprland.desktop
+        fi
+    fi
 fi
