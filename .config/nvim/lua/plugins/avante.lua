@@ -1,139 +1,101 @@
 return {
+
   {
     "yetone/avante.nvim",
-    lazy = false,
-    version = false,
     event = "VeryLazy",
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "ibhagwan/fzf-lua",
-    },
-
+    version = false, -- Never set this value to "*"! Never!
     opts = {
-      -- Default configuration
-      hints = { enabled = true },
-
-      ---@alias AvanteProvider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
+      -- add any opts here
+      -- for example
       provider = "ollama",
-      auto_suggestions_provider = "ollama", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
-
-      claude = {
-        endpoint = "https://api.anthropic.com",
-        model = "claude-3-5-sonnet-20241022",
-        temperature = 0,
-        max_tokens = 4096,
-      },
-
       ollama = {
-        endpoint = "http://localhost:11434",
-
-        model = "qwq",
-        -- model = "gemma3:27b",
+        endpoint = "http://[fd7a:115c:a1e0::d5b1:4d]:11434",
+        model = "gemma3:27b", -- your desired model (or use gpt-4o, etc.)
+        timeout = 90000, -- Timeout in milliseconds, increase this for reasoning models
+        temperature = 0,
+        max_tokens = 16384, -- Increase this to include reasoning tokens (for reasoning models)
+        --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
       },
 
-      -- File selector configuration
-      --- @alias FileSelectorProvider "native" | "fzf" | "mini.pick" | "snacks" | "telescope" | string
-      file_selector = {
-        provider = "fzf", -- Avoid native provider issues
-        provider_opts = {},
+      auto_suggestions_provider = "gemma3",
+      behaviour = {
+        auto_suggestions = true, -- Experimental stage
       },
-    },
-    build = LazyVim.is_win() and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
-  },
 
-  {
-    "saghen/blink.cmp",
-    lazy = true,
-    dependencies = { "saghen/blink.compat" },
-    opts = {
-      sources = {
-        default = { "avante_commands", "avante_mentions", "avante_files" },
-        compat = {
-          "avante_commands",
-          "avante_mentions",
-          "avante_files",
-        },
-        -- LSP score_offset is typically 60
-        providers = {
-          avante_commands = {
-            name = "avante_commands",
-            module = "blink.compat.source",
-            score_offset = 90,
-            opts = {},
-          },
-          avante_files = {
-            name = "avante_files",
-            module = "blink.compat.source",
-            score_offset = 100,
-            opts = {},
-          },
-          avante_mentions = {
-            name = "avante_mentions",
-            module = "blink.compat.source",
-            score_offset = 1000,
-            opts = {},
-          },
+      vendors = {
+        gemma3 = {
+          __inherited_from = "openai",
+          api_key_name = "",
+          endpoint = "http://[fd7a:115c:a1e0::d5b1:4d]:11434/v1",
+          model = "codegemma",
+          disable_tools = true, -- Open-source models often do not support tools.
         },
       },
     },
-  },
 
-  -- {
-  --   "MeanderingProgrammer/render-markdown.nvim",
-  --   optional = true,
-  --   ft = function(_, ft)
-  --     vim.list_extend(ft, { "Avante" })
-  --   end,
-  --   opts = function(_, opts)
-  --     opts.file_types = vim.list_extend(opts.file_types or {}, { "Avante" })
-  --   end,
-  -- },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
 
-  {
-    "folke/which-key.nvim",
-    optional = true,
-    opts = {
-      spec = {
-        { "<leader>a", group = "ai" },
-      },
-    },
-  },
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
 
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    config = function()
-      require("neo-tree").setup({
-        filesystem = {
-          commands = {
-            avante_add_files = function(state)
-              local node = state.tree:get_node()
-              local filepath = node:get_id()
-              local relative_path = require("avante.utils").relative_path(filepath)
-
-              local sidebar = require("avante").get()
-
-              local open = sidebar:is_open()
-              -- ensure avante sidebar is open
-              if not open then
-                require("avante.api").ask()
-                sidebar = require("avante").get()
-              end
-
-              sidebar.file_selector:add_selected_file(relative_path)
-
-              -- remove neo tree buffer
-              if not open then
-                sidebar.file_selector:remove_selected_file("neo-tree filesystem [1]")
-              end
-            end,
+      --- The below dependencies are optional,
+      -- "echasnovski/mini.pick", -- for file_selector provider mini.pick
+      -- "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+      -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      -- "ibhagwan/fzf-lua", -- for file_selector provider fzf
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      -- "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
           },
-          window = {
-            mappings = {
-              ["oa"] = "avante_add_files",
+        },
+      },
+
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+
+      {
+        "saghen/blink.cmp",
+        dependencies = {
+          "Kaiser-Yang/blink-cmp-avante",
+        },
+
+        opts = {
+          sources = {
+            -- Add 'avante' to the list
+            default = { "avante", "lsp", "path", "snippets", "buffer" },
+            providers = {
+              avante = {
+                module = "blink-cmp-avante",
+                name = "Avante",
+              },
             },
           },
         },
-      })
-    end,
+      },
+    },
   },
 }
