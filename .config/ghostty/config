@@ -9,7 +9,7 @@ adjust-underline-position = 4
 mouse-hide-while-typing = true
 
 # Theme
-theme = tokyonight
+theme = kanagawa-wave
 cursor-invert-fg-bg = true
 background-opacity = 0.7
 window-theme = ghostty
