@@ -156,8 +156,8 @@ keybinds clear-defaults=true {
         bind "Alt s" { GoToTab 3; }
         bind "Alt t" { GoToTab 4; }
         bind "Alt g" { GoToTab 5; }
-        bind "Alt i" { GoToNextTab; }
-        bind "Alt o" { GoToPreviousTab; }
+        bind "Alt i" { GoToPreviousTab; }
+        bind "Alt o" { GoToNextTab; }
     }
     shared_except "locked" "entersearch" {
         bind "enter" { SwitchToMode "locked"; }
