@@ -12,12 +12,12 @@ alias vi=nvim
 
 # more ways to ls
 
-eza_params=(
-    '--git' '--icons' '--group' '--group-directories-first'
-    '--time-style=long-iso' '--color-scale=all'
-)
-
 if command -v eza 2>&1 >/dev/null; then
+    eza_params=(
+        '--git' '--icons' '--group' '--group-directories-first'
+        '--time-style=long-iso' '--color-scale=all'
+    )
+
     alias ls='eza $eza_params'
     alias l='eza $eza_params'
     alias ll='eza --all --header --long $eza_params'
@@ -59,7 +59,7 @@ alias fd='find . -type d -name'
 alias ff='find . -type f -name'
 
 # pacman (yay)
-alias yeet='yay -Rcs'
+alias yeet='paru -Rcs'
 
 # chezmoi
 alias cma='chezmoi add'
