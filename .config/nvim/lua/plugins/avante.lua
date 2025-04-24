@@ -19,7 +19,7 @@ return {
 
       auto_suggestions_provider = "gemma3",
       behaviour = {
-        auto_suggestions = true, -- Experimental stage
+        auto_suggestions = false, -- Experimental stage
       },
 
       vendors = {
