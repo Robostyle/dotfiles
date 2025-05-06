@@ -55,3 +55,4 @@
     path = "~/.gitconfig_work"
 [safe]
 	directory = /home/rsuijker/work/codec_firmware_root
+	directory = /home/roberts/work/codec_firmware_root
