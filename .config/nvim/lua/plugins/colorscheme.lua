@@ -10,6 +10,14 @@ return {
   },
 
   {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    opts = {
+      dark_variant = "moon",
+    },
+  },
+
+  {
     "catppuccin/nvim",
     flavour = "frappe",
     name = "catppuccin",
@@ -26,7 +34,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "kanagawa",
+      colorscheme = "rose-pine",
     },
   },
 }
