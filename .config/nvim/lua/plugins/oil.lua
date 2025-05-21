@@ -30,6 +30,9 @@ return {
   opts = {
     winbar = "%!v:lua.get_oil_winbar()",
 
+    skip_confirm_for_simple_edits = true,
+    watch_for_changes = true,
+
     keymaps = {
       ["gd"] = {
         desc = "Toggle file detail view",
