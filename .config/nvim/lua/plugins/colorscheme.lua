@@ -1,4 +1,4 @@
-local use_transparent_background = false
+local use_transparent_background = true
 
 return {
   {
@@ -34,7 +34,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "rose-pine",
+      colorscheme = "kanagawa",
     },
   },
 }
