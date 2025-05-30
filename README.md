@@ -5,16 +5,15 @@ These are my personal opinionated dotfiles.
 I created this repo to help me backup my config files and to easily deploy them on a new machine. I use
 [yadm](https://yadm.io/) to manage these files.
 
-
 ## Core system info
 
-* OS: [Arch Linux](https://archlinux.org/).
-* WM: [hyprland](https://hyprland.org/)
-* bash: [zsh](https://zsh.org/)
-* Terminal Emulator: [Ghostty](https://ghostty.org/)
-* Panel: [hyprpanel](https://hyprpanel.com/)
-* Text Editor: [neovim](https://neovim.io/)
-* App Launcher: [fuzzel](https://codeberg.org/dnkl/fuzzel)
+- OS: [Arch Linux](https://archlinux.org/).
+- WM: [hyprland](https://hyprland.org/)
+- bash: [zsh](https://zsh.org/)
+- Terminal Emulator: [Ghostty](https://ghostty.org/)
+- Panel: [hyprpanel](https://hyprpanel.com/)
+- Text Editor: [neovim](https://neovim.io/)
+- App Launcher: [fuzzel](https://codeberg.org/dnkl/fuzzel)
 
 ## Base system install
 
@@ -25,15 +24,15 @@ I created this repo to help me backup my config files and to easily deploy them 
 >
 > In the guide, I will be using [Paru](https://github.com/morganamilo/paru) as the AUR helper. Be sure to install it or change the commands to your preferred one. Note, `pacman` will be used to install official Arch packages. A separate section will use Paru to install packages from the AUR.
 
- [!WARNING]
+[!WARNING]
+
 > The installation guide is under construction, try it at your own risk!
->
 
 ### System
 
 ```bash
-sudo pacman -Sy --needed hyprland hyprlock hypridle hyprpaper hyprpicker xdg-desktop-portal-hyprland hyprsunset hyprpolkitagent hyprcursor base-devel uwsm fuzzel wl-clipboard cliphist playerctl 
-paru -Sy ags-hyprpanel-git 
+sudo pacman -Sy --needed hyprland hyprlock hypridle hyprpaper hyprpicker xdg-desktop-portal-hyprland hyprsunset hyprpolkitagent hyprcursor base-devel uwsm playerctl
+paru -Sy walker-bin clipse
 ```
 
 ### CLI/TUI
@@ -72,7 +71,7 @@ fc-cache -fv
 ### GUI Apps
 
 ```bash
-sudo pacman -Sy ghostty 
+sudo pacman -Sy ghostty
 ```
 
 Optional Gnome apps:
@@ -82,9 +81,8 @@ sudo pacman -Sy nautilus boabab gnome-characters gnome-disk-utility gnome-system
 ```
 
 ```bash
-paru -Sy zen-browser-bin speech-dispatcher
+paru -Sy brave-bin
 ```
-
 
 ## Starting desktop
 
@@ -99,5 +97,5 @@ systemctl --user enable --now hyprpolkitagent.service
 
 ## TODO
 
-* check out hyprland groups
-* check my config against latest hyprland sample config
+- check out hyprland groups
+- check my config against latest hyprland sample config
