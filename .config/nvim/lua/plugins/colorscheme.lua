@@ -10,31 +10,18 @@ return {
   },
 
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "gbprod/nord.nvim",
+    lazy = false,
+    priority = 1000,
     opts = {
-      dark_variant = "moon",
-    },
-  },
-
-  {
-    "catppuccin/nvim",
-    flavour = "frappe",
-    name = "catppuccin",
-    opts = {
-      transparent_background = use_transparent_background,
-      integrations = {
-        blink_cmp = true,
-        neogit = true,
-        render_markdown = true,
-      },
+      transparent = use_transparent_background,
     },
   },
 
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "kanagawa",
+      colorscheme = "nord",
     },
   },
 }
