@@ -1,43 +1,96 @@
+/* Polar Night */
+@define-color nord0 #2e3440;
+@define-color nord1 #3b4252;
+@define-color nord2 #434c5e;
+@define-color nord3 #4c566a;
+
+/* Snow Storm */
+@define-color nord4 #d8dee9;
+@define-color nord5 #e5e9f0;
+@define-color nord6 #eceff4;
+
+/* Frost */
+@define-color nord7 #5e81ac;
+@define-color nord8 #88c0d0;
+@define-color nord9 #81a1c1;
+@define-color nord10 #5e81ac;
+
+/* Aurora */
+@define-color nord11 #bf616a; /* red */
+@define-color nord12 #d08770; /* orange */
+@define-color nord13 #ebcb8b; /* yellow */
+@define-color nord14 #a3be8c; /* green */
+@define-color nord15 #b48ead; /* purple */
+
 * {
+  font-family: "Ubuntu Nerd Font";
   font-size: 16px;
   min-height: 0;
-  border-radius: 1rem;
+  border-radius: 0;
   padding: 0.1rem;
 }
 
 window#waybar {
-  background: rgba(255, 255, 255, 0.2);
-  color: rgb(0, 0, 0);
+  background-color: alpha(@nord2, 0.4);
+  color: @nord4;
 }
 
 tooltip {
-  background: #000000;
+  background-color: alpha(@nord1, 0.9);
 }
 tooltip label {
-  color: white;
+  color: @nord4;
+}
+
+#window label {
+  color: @nord9;
+  font-size: 0.98rem;
+  font-weight: bold;
+}
+
+#workspaces {
+  background: transparent;
+}
+
+#workspaces label {
+  background: transparent;
+  font-size: 0.85rem;
 }
 
 #workspaces button {
-  padding: 0 5px;
+  border: none;
+  padding: 2px 4px;
+}
+
+#workspaces button:hover {
   background: transparent;
-  color: white;
-  border-bottom: 3px solid transparent;
+  border: none;
+  color: alpha(@nord8, 0.9);
 }
 
-#workspaces button.focused {
-  background: #64727d;
-  border-bottom: 3px solid white;
+#workspaces button.empty {
+  color: alpha(@nord4, 0.8);
 }
 
-#mode,
+#workspaces button.visible {
+  color: alpha(@nord4, 0.8);
+}
+
+#workspaces button.active {
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid alpha(@nord7, 0.9);
+  color: @nord4;
+  font-weight: bold;
+}
+
+#workspaces button.urgent {
+  color: alpha(@nord12, 0.9);
+}
+
 #clock,
 #battery {
   padding: 0 10px;
-}
-
-#mode {
-  background: #64727d;
-  border-bottom: 3px solid white;
 }
 
 #clock,
@@ -49,17 +102,11 @@ tooltip label {
 #backlight,
 #network,
 #pulseaudio,
-#wireplumber,
-#custom-media,
 #tray,
-#mode,
-#idle_inhibitor,
-#scratchpad,
-#mpd {
+#idle_inhibitor {
   margin: 2px;
   padding-left: 4px;
   padding-right: 4px;
-  color: #000000;
 }
 
 .modules-left > widget:first-child > #workspaces {
@@ -87,44 +134,46 @@ tooltip label {
 
 @keyframes blink {
   to {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: transparent;
+    color: @nord4;
   }
 }
 
 #battery.warning:not(.charging) {
-  color: #ffa500;
+  background-color: @nord13;
+  color: @nord1;
   animation-name: blink;
-  animation-duration: 0.5s;
+  animation-duration: 0.75s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
 
 #battery.critical:not(.charging) {
-  color: #f53c3c;
+  background-color: @nord11;
+  color: @nord1;
   animation-name: blink;
-  animation-duration: 0.5s;
+  animation-duration: 0.75s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }
 
 label:focus {
-  background-color: #000000;
+  background-color: @nord1;
 }
 
 #network.disconnected {
-  background-color: #f53c3c;
+  background-color: @nord12;
+  color: @nord4;
 }
 
 #temperature.critical {
-  background-color: #eb4d4b;
+  background-color: @nord11;
 }
 
 #idle_inhibitor.activated {
-  background-color: #ecf0f1;
-  color: #2d3436;
+  color: @nord9;
 }
 
 #tray > .passive {
@@ -133,14 +182,5 @@ label:focus {
 
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-  background-color: #eb4d4b;
-}
-
-#custom-os_button {
-  font-size: 32px;
-  transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-#custom-os_button:hover {
-  background: white;
-  color: black;
+  background-color: @nord12;
 }

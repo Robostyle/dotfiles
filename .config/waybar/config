@@ -17,41 +17,26 @@
       "memory",
       "network",
       "pulseaudio",
+      "bluetooth",
+      "upower",
       "backlight",
-      "keyboard-state",
       "battery",
       "tray",
       "clock"
     ],
 
-    "hyprland/window": {
-      "format": "{class}",
-      "max-length": 20,
-      "rewrite": {
-        "^(?!.*\\S).*": "Finder"
-      }
-    },
-    "keyboard-state": {
-      "numlock": true,
-      "capslock": true,
-      "format": "{name} {icon}",
+    "hyprland/workspaces": {
+      "active-only": false,
+      "all-outputs": false,
+      "format": "{name}: {icon}",
       "format-icons": {
-        "locked": "",
-        "unlocked": ""
+        "active": "",
+        "default": "",
+        "urgent": "⚠"
       }
     },
-    "sway/mode": {
-      "format": "<span style=\"italic\">{}</span>"
-    },
-    "sway/scratchpad": {
-      "format": "{icon} {count}",
-      "show-empty": false,
-      "format-icons": [
-        "",
-        ""
-      ],
-      "tooltip": true,
-      "tooltip-format": "{app}: {title}"
+    "hyprland/window": {
+      "format": "{title}",
     },
     "idle_inhibitor": {
       "format": "{icon}",
@@ -68,10 +53,10 @@
       "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "cpu": {
-      "format": "  {usage}%"
+      "format": "󰻠 {usage}%"
     },
     "memory": {
-      "format": " {}%"
+      "format": "󰍛 {}%"
     },
     "temperature": {
       "thermal-zone": 2,
@@ -80,9 +65,9 @@
       "format-critical": "{icon} {temperatureC}°C",
       "format": "{icon} {temperatureC}°C",
       "format-icons": [
-        "",
+        "",
         "",
-        ""
+        ""
       ]
     },
     "backlight": {
@@ -117,15 +102,15 @@
       ]
     },
     "network": {
-      "format-wifi": "{essid} ({signalStrength}%) ",
-      "format-ethernet": " {ifname}",
-      "tooltip-format": " {ifname} via {gwaddr}\n\n{ipaddr}/{cidr}",
-      "format-linked": " {ifname} (No IP)",
+      "format-wifi": "  {essid} ({signalStrength}%)",
+      "format-ethernet": "  {ifname}",
+      "tooltip-format": "  {ifname} via {gwaddr}\n\n{ipaddr}/{cidr}",
+      "format-linked": "  {ifname} (No IP)",
       "format-disconnected": "Disconnected ⚠ {ifname}"
     },
     "pulseaudio": {
       "scroll-step": 5,
-      "format": "{icon}  {volume}% {format_source}",
+      "format": "{icon} {volume}% {format_source}",
       "format-bluetooth": " {icon} {volume}% {format_source}",
       "format-bluetooth-muted": "  {icon} {format_source}",
       "format-muted": "  {format_source}",
@@ -140,38 +125,6 @@
       },
       "on-click": "pavucontrol",
       "on-click-right": "foot -a pw-top pw-top"
-    }
-  },
-  {
-    "layer": "top",
-    "position": "bottom",
-    "height": 41,
-    "width": 2,
-    "modules-left": [
-      "custom/os_button"
-    ],
-    "modules-center": [
-      "sway/mode",
-      "wlr/taskbar"
-    ],
-    "margin": "4",
-    "spacing": "5",
-    "sway/window": {
-      "max-length": 50
-    },
-    "custom/os_button": {
-      "format": "🔍",
-      "on-click": "wofi --show drun",
-      "tooltip": false
-    },
-    "wlr/taskbar": {
-      "format": "{icon}",
-      "icon-size": 36,
-      "spacing": 3,
-      "on-click-middle": "close",
-      "tooltip-format": "{title}",
-      "ignore-list": [],
-      "on-click": "activate"
     }
   }
 ]
