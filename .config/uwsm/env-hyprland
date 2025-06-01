@@ -1,0 +1,2 @@
+export AQ_DRM_DEVICES="/dev/dri/card1"
+export GTK_THEME=Adwaita:dark
