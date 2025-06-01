@@ -7,13 +7,13 @@ I created this repo to help me backup my config files and to easily deploy them 
 
 ## Core system info
 
-- OS: [Arch Linux](https://archlinux.org/).
+- OS: [CachyOS](https://cachyos.org/).
 - WM: [hyprland](https://hyprland.org/)
-- bash: [zsh](https://zsh.org/)
+- bash: [fish](https://fishshell.com/)
 - Terminal Emulator: [Ghostty](https://ghostty.org/)
-- Panel: [hyprpanel](https://hyprpanel.com/)
+- Panel: [Waybar](https://github.com/Alexays/Waybar)
 - Text Editor: [neovim](https://neovim.io/)
-- App Launcher: [fuzzel](https://codeberg.org/dnkl/fuzzel)
+- App Launcher: [Walker](https://github.com/abenz1267/walker)
 
 ## Base system install
 
@@ -58,8 +58,7 @@ systemctl --user enable --now pipewire wireplumber
 ### Fonts
 
 ```bash
-sudo pacman -Sy noto-fonts noto-fonts-emoji
-paru -Sy ttf-maple
+sudo pacman -Sy noto-fonts noto-fonts-emoji otf-font-awesome ttf-monaspace-variable ttf-ubuntu-nerd
 ```
 
 After installing, refresh the font cache:
