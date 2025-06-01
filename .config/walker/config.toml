@@ -1,3 +1,32 @@
 theme = "nord"
 hotreload_theme = true
 
+[[plugins]]
+name = "kill"
+prefix = "k:"
+src_once = "ps -u $USER -o comm= | sort -u"
+cmd = "pkill -f %RESULT%"
+
+[[plugins]]
+keep_sort = false
+name = "power"
+placeholder = "Power"
+recalculate_score = true
+show_icon_when_single = true
+switcher_only = true
+
+[[plugins.entries]]
+exec = "loginctl terminate-user ''"
+label = "Logout"
+
+[[plugins.entries]]
+exec = "shutdown now"
+label = "Shutdown"
+
+[[plugins.entries]]
+exec = "reboot"
+label = "Reboot"
+
+[[plugins.entries]]
+exec = "playerctl --all-players pause & hyprlock"
+label = "Lock Screen"
