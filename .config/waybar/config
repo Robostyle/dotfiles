@@ -18,7 +18,6 @@
       "network",
       "pulseaudio",
       "bluetooth",
-      "upower",
       "backlight",
       "battery",
       "tray",
