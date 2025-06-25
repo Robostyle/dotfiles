@@ -32,6 +32,8 @@
 [alias]
     l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
 
+    s = status
+
     b = branch
     ba = branch -a
     # list branches per author
@@ -53,6 +55,3 @@
 
 [includeIf "gitdir:~/work/"]
     path = "~/.gitconfig_work"
-[safe]
-	directory = /home/rsuijker/work/codec_firmware_root
-	directory = /home/roberts/work/codec_firmware_root
