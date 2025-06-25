@@ -16,7 +16,7 @@ show_icon_when_single = true
 switcher_only = true
 
 [[plugins.entries]]
-exec = "loginctl terminate-user ''"
+exec = "loginctl terminate-session \"$XDG_SESSION_ID\""
 label = "Logout"
 
 [[plugins.entries]]
