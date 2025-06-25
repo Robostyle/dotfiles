@@ -17,8 +17,7 @@ mouse-hide-while-typing = true
 
 # Theme
 theme = nord
-cursor-invert-fg-bg = true
-background-opacity = 0.7
+background-opacity = 0.8
 window-theme = ghostty
 
 # Window
