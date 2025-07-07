@@ -28,7 +28,9 @@ return {
   ---@module 'oil'
   ---@type oil.SetupOpts
   opts = {
-    winbar = "%!v:lua.get_oil_winbar()",
+    win_options = {
+      winbar = "%!v:lua.get_oil_winbar()",
+    },
 
     skip_confirm_for_simple_edits = true,
     watch_for_changes = true,
