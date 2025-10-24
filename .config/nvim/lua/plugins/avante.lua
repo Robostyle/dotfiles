@@ -6,9 +6,25 @@ return {
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {
-      provider = "ollama",
+      provider = "tkhgroup",
+      auto_suggestions_provider = "autocomplete",
 
       providers = {
+        tkhgroup = {
+          __inherited_from = "openai",
+          endpoint = "https://api.mytkhgroup.com/llm/v1",
+          disable_tools = false,
+          -- model = "deepseek-r1-distill-llama-70b",
+          model = "vertex_ai/gemini-2.5-pro",
+        },
+
+        autocomplete = {
+          __inherited_from = "openai",
+          endpoint = "https://api.mytkhgroup.com/llm/v1",
+          -- model = "deepseek-r1-distill-llama-70b",
+          model = "vertex_ai/gemini-2.5-flash-lite",
+        },
+
         ollama = {
           endpoint = string.format("http://%s:11434", config.llm_endpoint),
           model = "deepseek-r1:14b", -- your desired model (or use gpt-4o, etc.)
@@ -18,7 +34,6 @@ return {
           --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
         },
 
-        -- auto_suggestions_provider = "deepseek-r1:8b",
         behaviour = {
           auto_suggestions = false, -- Experimental stage
         },
@@ -34,7 +49,7 @@ return {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
 
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "nvim-mini/mini.icons",
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
