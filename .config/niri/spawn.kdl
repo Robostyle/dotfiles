@@ -1,0 +1,16 @@
+// Add lines like this to spawn processes at startup.
+// Note that running niri as a session supports xdg-desktop-autostart,
+// which may be more convenient to use.
+// See the binds section below for more spawn examples.
+
+// This line starts the polkit agent
+spawn-at-startup "/usr/lib/hyprpolkitagent/hyprpolkitagent"
+
+// Run the shell
+spawn-at-startup "qs" "-c" "noctalia-shell"
+
+// Idle inhibitor
+spawn-at-startup "hypridle"
+
+// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
+// spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
