@@ -5,6 +5,9 @@
 // https://yalter.github.io/niri/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
 
+include optional=true "optional/outputs.kdl"
+
+
 output "DP-2" {
     off
 }
