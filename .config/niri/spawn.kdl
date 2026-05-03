@@ -15,5 +15,8 @@ spawn-at-startup "hypridle"
 spawn-at-startup "elephant"
 spawn-at-startup "walker" "--gapplication-service"
 
+spawn-at-startup "dbus-update-activation-environment" "--all"
+spawn-at-startup "gnome-keyring-daemon" "--start" "--components=secrets"
+
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
