@@ -19,7 +19,7 @@ binds {
     // Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+Alt+L hotkey-overlay-title="Lock the Screen" { spawn-sh "hyprlock"; }
 
-    Mod+Space { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
+    Mod+Space { spawn-sh "walker"; }
     Mod+S { spawn-sh "qs -c noctalia-shell ipc call controlCenter toggle"; }
     Mod+Shift+S { spawn-sh "qs -c noctalia-shell ipc call settings toggle"; }
 
@@ -259,6 +259,8 @@ binds {
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+
+    Mod+Alt+S hotkey-overlay-title="Swappy" { spawn-sh "wl-paste --type image/png | swappy -f -"; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here

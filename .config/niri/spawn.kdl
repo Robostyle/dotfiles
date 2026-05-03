@@ -12,5 +12,8 @@ spawn-at-startup "qs" "-c" "noctalia-shell"
 // Idle inhibitor
 spawn-at-startup "hypridle"
 
+spawn-at-startup "elephant"
+spawn-at-startup "walker" "--gapplication-service"
+
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
