@@ -1,0 +1,21 @@
+# Fonts
+font-family = "Monaspace Argon Var"
+font-family-italic = "Monaspace Radon Var"
+font-size = 10
+
+font-feature = "calt"
+font-feature = "ss01"
+font-feature = "ss02"
+font-feature = "ss03"
+font-feature = "ss04"
+font-feature = "liga"
+
+adjust-underline-position = 4
+
+# Theme
+theme = Kanagawa Wave
+background-opacity = 0.8
+window-theme = ghostty
+
+# Other
+shell-integration-features = cursor,sudo,ssh-env
