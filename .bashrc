@@ -36,3 +36,6 @@ alias '.....'.='cd ../../../../..'
 eval "$(fzf --bash)"
 eval "$(zoxide init bash)"
 eval "$(starship init bash)"
+
+export EDITOR=/usr/bin/nvim
+export VISUAL=/usr/bin/nvim
