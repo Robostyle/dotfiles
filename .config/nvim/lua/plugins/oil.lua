@@ -1,61 +1,71 @@
--- Global function to retrieve the current directory
-function _G.get_oil_winbar()
-  local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
-  local dir = require("oil").get_current_dir(bufnr)
-  if dir then
-    return vim.fn.fnamemodify(dir, ":~")
-  else
-    -- If there is no current directory (e.g. over ssh), just show the buffer name
-    return vim.api.nvim_buf_get_name(0)
-  end
-end
-
-local detail = false
-
-local function toggle_file_detail()
-  detail = not detail
-  if detail then
-    require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
-  else
-    require("oil").set_columns({ "icon" })
-  end
-end
+-- A vim-vinegar like file explorer that lets you edit your filesystem like a normal Neovim buffer.
+-- https://github.com/stevearc/oil.nvim
 
 return {
-  "stevearc/oil.nvim",
+  {
+    'stevearc/oil.nvim',
+    lazy = false, -- Lazy loading is not recommended
 
-  ---
-  ---@module 'oil'
-  ---@type oil.SetupOpts
-  opts = {
-    win_options = {
-      winbar = "%!v:lua.get_oil_winbar()",
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
     },
 
-    skip_confirm_for_simple_edits = true,
-    watch_for_changes = true,
+    __opts = function(_, opts)
+      opts = opts or {}
 
-    keymaps = {
-      ["gd"] = {
-        desc = "Toggle file detail view",
-        callback = toggle_file_detail,
+      opts.keymaps = opts.keymaps or {}
+      opts.keymaps['<C-v>'] = { 'actions.select', opts = { vertical = true } }
+      opts.keymaps['<C-s>'] = { 'actions.select', opts = { horizontal = true } }
+      opts.keymaps['q'] = { 'actions.close', mode = 'n' }
+      opts.view_options = { show_hidden = true }
+      return opts
+    end,
+
+    opts = {
+      columns = {
+        'permissions',
+        'size',
+        'icon',
       },
+
+      skip_confirm_for_simple_edits = false,
+
+      float = {
+        padding = 8,
+        max_width = 0.9,
+        max_height = 0.9,
+      },
+
+      keymaps = {
+        ['<C-v>'] = { 'actions.select', opts = { vertical = true } },
+        ['<C-s>'] = { 'actions.select', opts = { horizontal = true } },
+        ['q'] = { 'actions.close', mode = 'n' },
+      },
+
+      view_options = {
+        show_hidden = true,
+      },
+    },
+
+    keys = require('config.keymaps').setup_oil_keymaps(),
+  },
+
+  {
+    'malewicz1337/oil-git.nvim',
+    dependencies = {
+      'stevearc/oil.nvim',
+      opts = {
+        win_options = { signcolumn = 'auto:2' },
+      },
+    },
+    opts = {
+      symbol_position = 'signcolumn',
     },
   },
 
-  -- Optional dependencies
-  dependencies = { { "nvim-mini/mini.icons", opts = {} } },
-  -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-  -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
-  lazy = false,
-
-  keys = {
-    {
-      "<leader>o",
-      function()
-        require("oil").open(nil)
-      end,
-      desc = "Find Plugin File",
-    },
+  {
+    'JezerM/oil-lsp-diagnostics.nvim',
+    dependencies = { 'stevearc/oil.nvim' },
+    opts = {},
   },
 }

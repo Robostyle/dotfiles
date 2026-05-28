@@ -1,34 +1,17 @@
-local use_transparent_background = true
-
 return {
-  {
-    "rebelot/kanagawa.nvim",
+  'rebelot/kanagawa.nvim',
+  priority = 1000, -- Make sure to load this before all the other start plugins.
 
-    opts = {
-      transparent = use_transparent_background,
-      theme = "wave",
-    },
-  },
+  config = function()
+    ---@diagnostic disable-next-line: missing-fields
+    require('kanagawa').setup {
+      styles = {
+        keywordStyle = { bold = true },
+        commentStyle = { italic = true },
+        transparent = true,
+      },
+    }
 
-  {
-    "gbprod/nord.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      transparent = use_transparent_background,
-    },
-  },
-
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000
-  },
-
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "catppuccin-mocha",
-    },
-  },
+    vim.cmd.colorscheme 'kanagawa'
+  end,
 }

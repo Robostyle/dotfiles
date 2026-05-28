@@ -1,23 +1,14 @@
 return {
-  "NeogitOrg/neogit",
+  'NeogitOrg/neogit',
+  lazy = true,
 
   dependencies = {
-    "nvim-lua/plenary.nvim",  -- required
-    "sindrets/diffview.nvim", -- optional - Diff integration
+    'esmuellert/codediff.nvim',
+    'm00qek/baleia.nvim', --- For a custom log pager
+    'folke/snacks.nvim',
   },
 
-  config = true,
+  cmd = 'Neogit',
 
-  opts = {
-    disable_line_numbers = false,
-    graph_style = "kitty",
-    status = {
-      recent_commit_count = 40,
-    },
-  },
-
-  keys = {
-    { "<leader>gn", [[<Cmd>lua require"neogit".open({ kind = "tab" })<CR>]],  desc = "Neogit" },
-    { "<leader>gN", [[<Cmd>lua require"neogit".open({ kind = "auto" })<CR>]], desc = "Neogit" },
-  },
+  keys = require('config.keymaps').setup_neogit_keymaps(),
 }
