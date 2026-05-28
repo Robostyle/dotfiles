@@ -6,15 +6,3 @@
 // Remember to uncomment the node by removing "/-"!
 
 include optional=true "optional/outputs.kdl"
-
-
-output "DP-2" {
-    off
-}
-
-output "HDMI-A-2" {
-    scale 1.5
-    // variable-refresh-rate
-    mode "5120x2160@60.021"
-}
-
