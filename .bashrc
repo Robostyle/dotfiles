@@ -33,9 +33,21 @@ alias '....'='cd ../../..'
 alias '....'.='cd ../../../..'
 alias '.....'.='cd ../../../../..'
 
-eval "$(fzf --bash)"
-eval "$(zoxide init bash)"
-eval "$(starship init bash)"
+function check_command_exist {
+	local cmd=$1
+	local init=$2
+	if command  -v $cmd &> /dev/null ; then
+		eval "$($init)"
+	else
+		echo "$cmd not found, install please!"
+		return 1
+	fi
+	return 0
+}
+
+check_command_exist 'fzf' 'fzf --bash'
+check_command_exist 'zoxide' 'zoxide init bash'
+check_command_exist 'starship' 'starship init bash'
 
 export EDITOR=/usr/bin/nvim
 export VISUAL=/usr/bin/nvim
