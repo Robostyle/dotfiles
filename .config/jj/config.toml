@@ -1,0 +1,37 @@
+"$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json"
+
+[git]
+push-branch-prefix = "rsu/push-"
+
+[ui]
+default-command = "status"
+editor = "nvim"
+
+[templates]
+draft_commit_description = '''
+concat(
+  builtin_draft_commit_description,
+  "\nJJ: ignore-rest\n",
+  diff.git(),
+)
+'''
+
+[merge-tools.meld]
+diff-args = ["--diff", "$left", "$right"]
+
+[revset-aliases]
+'closest_bookmark(to)' = 'heads(::to & bookmarks())'
+'closest_pushable(to)' = 'heads(::to & ~description(exact:"") & (~empty() | merges()))'
+
+[aliases]
+
+# Fetch from all remotes
+sync = ['git', 'fetch', '--all-remotes']
+
+# Show oneline log
+short = ["log", "-T", "builtin_log_oneline"]
+
+# Annotate file with authors. Shorthand for jj file annotate
+blame = ["file", "annotate"]
+
+tug = ["bookmark", "move", "--from", "closest_bookmark(@)", "--to", "closest_pushable(@)"]
