@@ -5,6 +5,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: Ghostty" repeat=false { spawn "ghostty"; }
     Mod+B hotkey-overlay-title="Open a browser: Brave" repeat=false { spawn "brave"; }
+    Mod+N hotkey-overlay-title="Open a files" repeat=false { spawn "nautilus"; }
     Mod+Alt+L hotkey-overlay-title="Lock the Screen" repeat=false { spawn-sh "hyprlock"; }
 
     Mod+Space { spawn-sh "walker"; }
@@ -123,6 +124,7 @@ binds {
     Mod+Alt+Shift+R { reset-window-height; }
     Mod+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
+    Mod+Alt+F { toggle-windowed-fullscreen; }
     Mod+Ctrl+F { expand-column-to-available-width; }
 
     Mod+C { center-column; }
