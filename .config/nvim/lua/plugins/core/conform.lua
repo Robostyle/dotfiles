@@ -6,6 +6,15 @@ return {
   lazy = true,
   event = { 'BufWritePre' },
   cmd = { 'ConformInfo' },
+  keys = {
+    {
+      '<leader>cf',
+      function()
+        require('conform').format({ bufnr = 0, timeout_ms = 5000, lsp_format = 'fallback' })
+      end,
+      desc = 'Format file',
+    },
+  },
 
   config = function(_, opts)
     vim.api.nvim_create_autocmd('BufWritePre', {

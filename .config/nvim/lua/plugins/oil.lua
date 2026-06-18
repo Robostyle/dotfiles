@@ -28,7 +28,7 @@ return {
         'icon',
       },
 
-      skip_confirm_for_simple_edits = false,
+      skip_confirm_for_simple_edits = true,
 
       float = {
         padding = 8,

@@ -2,8 +2,7 @@ local M = {}
 
 function M.open_type_hierarchy_in_snacks(kind)
   -- Grab active clients attached to the current buffer that support Type Hierarchies
-  local clients =
-    vim.lsp.get_clients { bufnr = 0, method = 'textDocument/prepareTypeHierarchy' }
+  local clients = vim.lsp.get_clients { bufnr = 0, method = 'textDocument/prepareTypeHierarchy' }
   if vim.tbl_isempty(clients) then
     vim.notify('No active LSP supports Type Hierarchies', vim.log.levels.WARN)
     return
@@ -19,8 +18,7 @@ function M.open_type_hierarchy_in_snacks(kind)
     end
 
     -- Route down to the subtypes/supertypes endpoint
-    local method = kind == 'supertypes' and 'typeHierarchy/supertypes'
-      or 'typeHierarchy/subtypes'
+    local method = kind == 'supertypes' and 'typeHierarchy/supertypes' or 'typeHierarchy/subtypes'
 
     client:request(method, { item = result[1] }, function(sub_err, sub_result)
       if sub_err or not sub_result or vim.tbl_isempty(sub_result) then

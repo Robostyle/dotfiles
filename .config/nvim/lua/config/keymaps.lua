@@ -8,9 +8,7 @@ local get_final_opts = function(desc, opts)
   }, opts or {}) -- 'opts or {}' handles cases where no opts are passed
 end
 
-local map = function(mode, keys, command, desc, opts)
-  vim.keymap.set(mode, keys, command, get_final_opts(desc, opts))
-end
+local map = function(mode, keys, command, desc, opts) vim.keymap.set(mode, keys, command, get_final_opts(desc, opts)) end
 
 local is_mac = vim.fn.has 'macunix' == 1
 local down_keys = is_mac and { '∆', '<M-j>', '<A-j>' } or { '<M-j>' }
@@ -59,13 +57,13 @@ map('n', 'N', "'nN'[v:searchforward].'zv'", 'Prev Search Result', { expr = true 
 map('x', 'N', "'nN'[v:searchforward]", 'Prev Search Result', { expr = true })
 map('o', 'N', "'nN'[v:searchforward]", 'Prev Search Result', { expr = true })
 
--- buffers (see fred and kick)
-
--- tabs (see fred and kick)
-
 -- better indenting
 map('v', '<', '<gv', 'Indent left')
 map('v', '>', '>gv', 'Indent right')
+
+-- commenting
+map('n', 'gco', 'o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', 'Add Comment Below')
+map('n', 'gcO', 'O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>', 'Add Comment Above')
 
 -- Lazy.nvim
 map('n', '<leader>l', '<cmd>Lazy<cr>', 'Lazy')
@@ -92,37 +90,71 @@ map('n', '[e', diagnostic_goto(false, 'ERROR'), 'Prev Error')
 map('n', ']w', diagnostic_goto(true, 'WARN'), 'Next Warning')
 map('n', '[w', diagnostic_goto(false, 'WARN'), 'Prev Warning')
 
+-- quit
+map('n', '<leader>qq', '<cmd>qa<cr>', 'Quit All')
+
+-- highlights under cursor
+map('n', '<leader>ui', vim.show_pos, 'Inspect Pos')
+map('n', '<leader>uI', function()
+  vim.treesitter.inspect_tree()
+  vim.api.nvim_input 'I'
+end, 'Inspect Tree')
+
+-- windows
+map('n', '<leader>-', '<C-W>s', 'Split Window Below', { remap = true })
+map('n', '<leader>|', '<C-W>v', 'Split Window Right', { remap = true })
+map('n', '<leader>wd', '<C-W>c', 'Delete Window', { remap = true })
+
+-- tabs
+map('n', '<leader><tab>l', '<cmd>tablast<cr>', 'Last Tab')
+map('n', '<leader><tab>o', '<cmd>tabonly<cr>', 'Close Other Tabs')
+map('n', '<leader><tab>f', '<cmd>tabfirst<cr>', 'First Tab')
+map('n', '<leader><tab><tab>', '<cmd>tabnew<cr>', 'New Tab')
+map('n', '<leader><tab>]', '<cmd>tabnext<cr>', 'Next Tab')
+map('n', '<leader><tab>d', '<cmd>tabclose<cr>', 'Close Tab')
+map('n', '<leader><tab>[', '<cmd>tabprevious<cr>', 'Previous Tab')
+
 function M.setup_trouble_keymaps()
   return {
+    { '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Diagnostics (Trouble)' },
+    { '<leader>xX', '<cmd>Trouble diagnostics toggle filter.buf=0<cr>', desc = 'Buffer Diagnostics (Trouble)' },
+    { '<leader>cs', '<cmd>Trouble symbols toggle<cr>', desc = 'Symbols (Trouble)' },
+    { '<leader>cS', '<cmd>Trouble lsp toggle<cr>', desc = 'LSP references/definitions/... (Trouble)' },
+    { '<leader>xL', '<cmd>Trouble loclist toggle<cr>', desc = 'Location List (Trouble)' },
+    { '<leader>xQ', '<cmd>Trouble qflist toggle<cr>', desc = 'Quickfix List (Trouble)' },
     {
-      '<leader>xx',
-      '<cmd>Trouble diagnostics toggle<cr>',
-      desc = 'Diagnostics (Trouble)',
+      '[q',
+      function()
+        if require('trouble').is_open() then
+          require('trouble').prev { skip_groups = true, jump = true }
+        else
+          local ok, err = pcall(vim.cmd.cprev)
+          if not ok then vim.notify(err, vim.log.levels.ERROR) end
+        end
+      end,
+      desc = 'Previous Trouble/Quickfix Item',
     },
     {
-      '<leader>xX',
-      '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
-      desc = 'Buffer Diagnostics (Trouble)',
-    },
-    {
-      '<leader>cl',
-      '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
-      desc = 'LSP Definitions / references / ... (Trouble)',
-    },
-    {
-      '<leader>xL',
-      '<cmd>Trouble loclist toggle<cr>',
-      desc = 'Location List (Trouble)',
-    },
-    {
-      '<leader>xQ',
-      '<cmd>Trouble qflist toggle<cr>',
-      desc = 'Quickfix List (Trouble)',
+      ']q',
+      function()
+        if require('trouble').is_open() then
+          require('trouble').next { skip_groups = true, jump = true }
+        else
+          local ok, err = pcall(vim.cmd.cnext)
+          if not ok then vim.notify(err, vim.log.levels.ERROR) end
+        end
+      end,
+      desc = 'Next Trouble/Quickfix Item',
     },
   }
 end
 
 function M.setup_toggles()
+  -- TODO: fixme
+  --   Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
+  -- Snacks.toggle.zen():map("<leader>uz")
+  -- TODO: fixme
+
   Snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map '<leader>uL'
 end
 
@@ -142,6 +174,30 @@ function M.setup_yanky_keymaps()
       '<leader>p',
       function() Snacks.picker.yanky() end,
       desc = 'Yanky history',
+    },
+  }
+end
+
+function M.setup_flash_keymaps()
+  return {
+    { 's', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
+    { 'S', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+    { 'r', mode = 'o', function() require('flash').remote() end, desc = 'Remote Flash' },
+    { 'R', mode = { 'o', 'x' }, function() require('flash').treesitter_search() end, desc = 'Treesitter Search' },
+    { '<c-s>', mode = { 'c' }, function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
+    -- Simulate nvim-treesitter incremental selection
+    {
+      '<c-space>',
+      mode = { 'n', 'o', 'x' },
+      function()
+        require('flash').treesitter {
+          actions = {
+            ['<c-space>'] = 'next',
+            ['<BS>'] = 'prev',
+          },
+        }
+      end,
+      desc = 'Treesitter Incremental Selection',
     },
   }
 end
@@ -224,63 +280,36 @@ function M.setup_noice_keymaps()
   }
 end
 
-function M.setup_gitsigns_keymaps()
-  return {
-    {
-      ']h',
-      function()
-        if vim.wo.diff then return ']c' end
-        vim.schedule(function() require('gitsigns').nav_hunk 'next' end)
-        return '<Ignore>'
-      end,
-      expr = true,
-      desc = 'Next hunk',
-    },
-    {
-      '[h',
-      function()
-        if vim.wo.diff then return '[c' end
-        vim.schedule(function() require('gitsigns').nav_hunk 'prev' end)
-        return '<Ignore>'
-      end,
-      expr = true,
-      desc = 'Prev hunk',
-    },
-    {
-      '<leader>ghb',
-      function()
-        local default_branch = require('utils.git').get_default_branch()
-        require('gitsigns').change_base(default_branch, true)
+function M.setup_gitsigns_keymaps(buffer)
+  print('Attached to ' .. buffer)
+  local gs = package.loaded.gitsigns
 
-        -- TODO: how to also tell codediff about this?
-        -- https://github.com/esmuellert/codediff.nvim/pull/345
-        -- require("codediff").change_base(default_branch, true)
-      end,
-      mode = { 'n', 'v' },
-      desc = 'change base to default branch',
-    },
-    {
-      '<leader>ghs',
-      function() require('gitsigns').stage_hunk() end,
-      mode = { 'n', 'v' },
-      desc = 'toggle stage hunk',
-    },
-    {
-      '<leader>ghS',
-      function() require('gitsigns').stage_buffer() end,
-      mode = { 'n', 'v' },
-      desc = 'Stage buffer',
-    },
-    {
-      '<leader>ghr',
-      function() require('gitsigns').reset_hunk() end,
-      desc = 'reset hunk',
-    },
-    {
-      '<leader>gbb',
-      function() require('gitsigns').blame() end,
-      desc = 'blame on the side',
-    },
+  local function buffer_map(mode, k, c, desc) map(mode, k, c, desc, { buffer = buffer, silent = true }) end
+
+  buffer_map('n', ']h', function()
+    if vim.wo.diff then
+      vim.cmd.normal { ']c', bang = true }
+    else
+      vim.schedule(function() gs.nav_hunk 'next' end)
+    end
+  end, 'Next hunk')
+
+  buffer_map('n', '[h', function()
+    if vim.wo.diff then
+      vim.cmd.normal { '[c', bang = true }
+    else
+      vim.schedule(function() gs.nav_hunk 'prev' end)
+    end
+  end, 'Prev hunk')
+
+  buffer_map('n', ']H', function() gs.nav_hunk 'last' end, 'Last Hunk')
+  buffer_map('n', '[H', function() gs.nav_hunk 'first' end, 'First Hunk')
+  buffer_map({ 'n', 'x' }, '<leader>ghs', gs.require('gitsigns').stage_hunk(), 'Stage hunk')
+  buffer_map({ 'n', 'x' }, '<leader>ghr', gs.require('gitsigns').reset_hunk(), 'Stage hunk')
+  buffer_map('n', '<leader>ghS', gs.require('gitsigns').stage_buffer(), 'Stage buffer')
+  buffer_map('n', '<leader>ghu', gs.require('gitsigns').undo_stage_hunk(), 'Undo stage buffer')
+
+  local x = {
     {
       '<leader>ght',
       function()
@@ -296,98 +325,94 @@ end
 function M.setup_snacks_keymaps()
   local exclude = {}
 
+  -- TODO: fix me
+  --
+  --
+  -- toggle options
+  -- LazyVim.format.snacks_toggle():map '<leader>uf'
+  -- LazyVim.format.snacks_toggle(true):map '<leader>uF'
+  -- Snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
+  -- Snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uw'
+  -- Snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map '<leader>uL'
+  -- Snacks.toggle.diagnostics():map '<leader>ud'
+  -- Snacks.toggle.line_number():map '<leader>ul'
+  -- Snacks.toggle
+  --   .option('conceallevel', { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = 'Conceal Level' })
+  --   :map '<leader>uc'
+  -- Snacks.toggle
+  --   .option('showtabline', { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = 'Tabline' })
+  --   :map '<leader>uA'
+  -- Snacks.toggle.treesitter():map '<leader>uT'
+  -- Snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark Background' }):map '<leader>ub'
+  -- Snacks.toggle.dim():map '<leader>uD'
+  -- Snacks.toggle.animate():map '<leader>ua'
+  -- Snacks.toggle.indent():map '<leader>ug'
+  -- Snacks.toggle.scroll():map '<leader>uS'
+  -- Snacks.toggle.profiler():map '<leader>dpp'
+  -- Snacks.toggle.profiler_highlights():map '<leader>dph'
+  --
+  -- if vim.lsp.inlay_hint then Snacks.toggle.inlay_hints():map '<leader>uh' end
+  -- TODO: fix me
+
   -- NOTE: Snacks is a global; _G.Snacks = M
   return {
     {
-      '<leader><leader>',
+      '<leader><space>',
       function()
         ---@type snacks.picker.smart.Config
         local opts = {
           multi = { 'buffers', 'files' },
-          hidden = true,
-          ignored = true,
+          hidden = false,
+          ignored = false,
           exclude = exclude,
         }
         Snacks.picker.smart(opts)
       end,
       desc = 'Files',
     },
-    { '<leader>/', function() Snacks.picker.grep() end, desc = 'Grep' },
-    {
-      '<leader>:',
-      function() Snacks.picker.command_history() end,
-      desc = 'Command History',
-    },
     { '<leader>,', function() Snacks.picker.buffers() end, desc = 'Buffers' },
-    {
-      '<leader>n',
-      function() Snacks.notifier.show_history() end,
-      desc = 'Toggle notification history',
-    },
+    { '<leader>/', function() Snacks.picker.grep() end, desc = 'Grep' },
+    { '<leader>:', function() Snacks.picker.command_history() end, desc = 'Command History' },
+    { '<leader>n', function() Snacks.picker.notifications() end, desc = 'Notification history' },
+
+    -- TODO: get inspiration from LazyVim for the 'has' key and virtual servers
+    -- to add the keymaps below
+
+    -- Search
+    -- search
+    { '<leader>s"', function() Snacks.picker.registers() end, desc = 'Registers' },
+    { '<leader>s/', function() Snacks.picker.search_history() end, desc = 'Search History' },
+    { '<leader>sa', function() Snacks.picker.autocmds() end, desc = 'Autocmds' },
+    { '<leader>sc', function() Snacks.picker.command_history() end, desc = 'Command History' },
+    { '<leader>sC', function() Snacks.picker.commands() end, desc = 'Commands' },
+    { '<leader>sd', function() Snacks.picker.diagnostics() end, desc = 'Diagnostics' },
+    { '<leader>sD', function() Snacks.picker.diagnostics_buffer() end, desc = 'Buffer Diagnostics' },
+    { '<leader>sh', function() Snacks.picker.help() end, desc = 'Help Pages' },
+    { '<leader>sH', function() Snacks.picker.highlights() end, desc = 'Highlights' },
+    { '<leader>si', function() Snacks.picker.icons() end, desc = 'Icons' },
+    { '<leader>sj', function() Snacks.picker.jumps() end, desc = 'Jumps' },
+    { '<leader>sk', function() Snacks.picker.keymaps() end, desc = 'Keymaps' },
+    { '<leader>sl', function() Snacks.picker.loclist() end, desc = 'Location List' },
+    { '<leader>sM', function() Snacks.picker.man() end, desc = 'Man Pages' },
+    { '<leader>sm', function() Snacks.picker.marks() end, desc = 'Marks' },
+    { '<leader>sR', function() Snacks.picker.resume() end, desc = 'Resume' },
+    { '<leader>sq', function() Snacks.picker.qflist() end, desc = 'Quickfix List' },
+    { '<leader>su', function() Snacks.picker.undo() end, desc = 'Undotree' },
+
+    -- UI
+    { '<leader>uC', function() Snacks.picker.colorschemes() end, desc = 'Colorschemes' },
 
     -- LSP
-    {
-      'gd',
-      function() Snacks.picker.lsp_definitions() end,
-      desc = 'Goto Definition',
-    },
-    {
-      'gs',
-      function()
-        vim.cmd 'split'
-        Snacks.picker.lsp_definitions()
-      end,
-      desc = 'Goto Definition (split)',
-    },
-    {
-      'gv',
-      function()
-        vim.cmd 'vsplit'
-        Snacks.picker.lsp_definitions()
-      end,
-      desc = 'Goto Definition (vertical split)',
-    },
-    {
-      'gD',
-      function() Snacks.picker.lsp_declarations() end,
-      desc = 'Goto Declaration',
-    },
-    {
-      'gr',
-      function() Snacks.picker.lsp_references() end,
-      nowait = true,
-      desc = 'References',
-    },
-    {
-      'gI',
-      function() Snacks.picker.lsp_implementations() end,
-      desc = 'Goto Implementation',
-    },
-    {
-      'gy',
-      function() Snacks.picker.lsp_type_definitions() end,
-      desc = 'Goto Type Definition',
-    },
-    {
-      '<leader>cai',
-      function() Snacks.picker.lsp_incoming_calls() end,
-      desc = 'Calls Incoming',
-    },
-    {
-      '<leder>cao',
-      function() Snacks.picker.lsp_outgoing_calls() end,
-      desc = 'Calls Outgoing',
-    },
-    {
-      '<leader>cs',
-      function() Snacks.picker.lsp_symbols() end,
-      desc = 'LSP Symbols',
-    },
-    {
-      '<leader>cS',
-      function() Snacks.picker.lsp_workspace_symbols() end,
-      desc = 'LSP Workspace Symbols',
-    },
+    { '<leader>cl', function() Snacks.picker.lsp_config() end, desc = 'Lsp Info' },
+    { 'gd', function() Snacks.picker.lsp_definitions() end, desc = 'Goto Definition' },
+    { 'gD', function() Snacks.picker.lsp_declarations() end, desc = 'Goto Declaration' },
+    { 'gr', function() Snacks.picker.lsp_references() end, nowait = true, desc = 'References' },
+    { 'gI', function() Snacks.picker.lsp_implementations() end, desc = 'Goto Implementation' },
+    { 'gy', function() Snacks.picker.lsp_type_definitions() end, desc = 'Goto Type Definition' },
+    { '<leader>cI', function() Snacks.picker.lsp_incoming_calls() end, desc = 'Calls Incoming' },
+    { '<leader>cO', function() Snacks.picker.lsp_outgoing_calls() end, desc = 'Calls Outgoing' },
+    { '<leader>cs', function() Snacks.picker.lsp_symbols() end, desc = 'LSP Symbols' },
+    { '<leader>cS', function() Snacks.picker.lsp_workspace_symbols() end, desc = 'LSP Workspace Symbols' },
 
     -- Class Inheritance trees routing smoothly into Snacks float panels
     {
@@ -402,64 +427,47 @@ function M.setup_snacks_keymaps()
     },
 
     -- Buffers
+    { '<leader>bb', '<cmd>e #<cr>', desc = 'Switch to Other Buffer' },
+    { '<leader>bd', function() Snacks.bufdelete() end, desc = 'Delete Buffer' },
+    { '<leader>bo', function() Snacks.bufdelete.other() end, desc = 'Delete Other Buffers' },
+    { '<leader>bi', function() Snacks.bufdelete.invisible() end, desc = 'Delete Invisible Buffers' },
+    { '<leader>bD', '<cmd>:bd<cr>', desc = 'Delete Buffer and Window' },
+
+    -- Git
+    { '<leader>gd', function() Snacks.picker.git_diff() end, desc = 'Git Diff (hunks)' },
     {
-      '<leader>bb',
-      '<cmd>e #<cr>',
-      desc = 'Switch to Other Buffer',
+      '<leader>gD',
+      function() Snacks.picker.git_diff { base = 'origin', group = true } end,
+      desc = 'Git Diff (origin)',
     },
-    {
-      '<leader>`',
-      '<cmd>e #<cr>',
-      desc = 'Switch to Other Buffer',
-    },
-    {
-      '<leader>bd',
-      function() Snacks.bufdelete() end,
-      desc = 'Delete Buffer',
-    },
-    {
-      '<leader>bo',
-      function() Snacks.bufdelete.other() end,
-      desc = 'Delete Other Buffers',
-    },
-    {
-      '<leader>bi',
-      function() Snacks.bufdelete.invisible() end,
-      desc = 'Delete Invisible Buffers',
-    },
-    {
-      '<leader>bD',
-      '<cmd>:bd<cr>',
-      desc = 'Delete Buffer and Window',
-    },
+    { '<leader>gs', function() Snacks.picker.git_status() end, desc = 'Git Status' },
+    { '<leader>gS', function() Snacks.picker.git_stash() end, desc = 'Git Stash' },
+    { '<leader>gL', function() Snacks.picker.git_log() end, desc = 'Git Log (cwd)' },
+    { '<leader>gb', function() Snacks.picker.git_log_line() end, desc = 'Git Blame Line' },
+    { '<leader>gf', function() Snacks.picker.git_log_file() end, desc = 'Git Current File History' },
+    -- { '<leader>gl', function() Snacks.picker.git_log { cwd = LazyVim.root.git() } end, desc = 'Git Current File History' },
   }
+
+  -- map('n', '<leader>gl', function() Snacks.picker.git_log { cwd = LazyVim.root.git() } end, { desc = 'Git Log' })
+  -- map({ 'n', 'x' }, '<leader>gB', function() Snacks.gitbrowse() end, { desc = 'Git Browse (open)' })
+  -- map({ 'n', 'x' }, '<leader>gY', function()
+  --   Snacks.gitbrowse { open = function(url) vim.fn.setreg('+', url) end, notify = false }
+  -- end, { desc = 'Git Browse (copy)' })
 end
 
 function M.setup_bufferline_keymaps()
   return {
+    { '<leader>bj', '<cmd>BufferLinePick<cr>', desc = 'Pick Buffer' },
     { '<leader>bp', '<Cmd>BufferLineTogglePin<CR>', desc = 'Toggle Pin' },
-    {
-      '<leader>bP',
-      '<Cmd>BufferLineGroupClose ungrouped<CR>',
-      desc = 'Delete Non-Pinned Buffers',
-    },
-    {
-      '<leader>br',
-      '<Cmd>BufferLineCloseRight<CR>',
-      desc = 'Delete Buffers to the Right',
-    },
-    {
-      '<leader>bl',
-      '<Cmd>BufferLineCloseLeft<CR>',
-      desc = 'Delete Buffers to the Left',
-    },
+    { '<leader>bP', '<Cmd>BufferLineGroupClose ungrouped<CR>', desc = 'Delete Non-Pinned Buffers' },
+    { '<leader>bl', '<Cmd>BufferLineCloseLeft<CR>', desc = 'Delete Buffers to the Left' },
+    { '<leader>br', '<Cmd>BufferLineCloseRight<CR>', desc = 'Delete Buffers to the Right' },
+    { '[b', '<cmd>BufferLineCyclePrev<cr>', desc = 'Prev Buffer' },
+    { '[B', '<cmd>BufferLineMovePrev<cr>', desc = 'Move buffer prev' },
+    { ']b', '<cmd>BufferLineCycleNext<cr>', desc = 'Next Buffer' },
+    { ']B', '<cmd>BufferLineMoveNext<cr>', desc = 'Move buffer next' },
     { '<S-h>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Prev Buffer' },
     { '<S-l>', '<cmd>BufferLineCycleNext<cr>', desc = 'Next Buffer' },
-    { '[b', '<cmd>BufferLineCyclePrev<cr>', desc = 'Prev Buffer' },
-    { ']b', '<cmd>BufferLineCycleNext<cr>', desc = 'Next Buffer' },
-    { '[B', '<cmd>BufferLineMovePrev<cr>', desc = 'Move buffer prev' },
-    { ']B', '<cmd>BufferLineMoveNext<cr>', desc = 'Move buffer next' },
-    { '<leader>bj', '<cmd>BufferLinePick<cr>', desc = 'Pick Buffer' },
   }
 end
 
@@ -482,6 +490,8 @@ function M.setup_lsp_autocmd_keymaps(buf)
   map('<leader>cc', vim.lsp.codelens.run, 'Run Codelens')
   -- map("<leader>cC", vim.lsp.codelens.refresh, "Refresh & Display Codelens") -- only needed if not using autocmd
 
+  map('<leader>ch', '<cmd>LspClangdSwitchSourceHeader<cr>', 'Toggle source/header')
+
   -- Opens a popup that displays documentation about the word under your cursor
   --  See `:help K` for why this keymap
   map('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -503,13 +513,18 @@ function M.setup_lsp_keymaps()
 end
 
 function M.setup_conform_keymaps()
-  map(
-    'n',
-    '<leader>uf',
-    require('utils.toggle').toggle_formatting,
-    'Toggle auto-formatting',
-    { silent = true }
-  )
+  map('n', '<leader>uf', require('utils.toggle').toggle_formatting, 'Toggle auto-formatting', { silent = true })
+end
+
+function M.setup_blink_indent_keymaps()
+  Snacks.toggle
+    .new({
+      id = 'blink_indent',
+      name = 'Indent Guides',
+      get = function() return require('blink.indent').is_enabled() end,
+      set = function(state) require('blink.indent').enable(state) end,
+    })
+    :map '<leader>ug'
 end
 
 function M.setup_undotree_keymaps()
@@ -519,29 +534,33 @@ end
 function M.setup_whichkey(wk)
   wk.add {
     { '<leader><tab>', group = 'tab' },
-    --  { "<leader>a", group = "ai" },
+    { '<leader>a', group = 'avante' },
     { '<leader>c', group = 'code' },
-    -- { "<leader>d", group = "debug" },
-    -- { "<leader>dl", group = "debug lua" },
     { '<leader>b', group = 'buffer' },
     { '<leader>g', group = 'git' },
-    -- { "<leader>gb", group = "blame" },
-    -- { "<leader>gd", group = "diffview" },
     { '<leader>gh', group = 'hunks' },
-    -- { "<leader>n", group = "notes" },
-    -- { "<leader>r", group = "run" },
     { '<leader>s', group = 'search' },
-    -- { "<leader>sg", group = "git" },
     { '<leader>sn', group = 'noice' },
-    -- { "<leader>t", group = "test" },
     { '<leader>u', group = 'ui' },
     { '<leader>x', group = 'diagnostics/quickfix' },
-    { '<leader>w', group = 'windows', proxy = '<c-w>' },
+    { '[', group = 'prev' },
+    { ']', group = 'next' },
+    { 'g', group = 'goto' },
+    { 'gs', group = 'surround' },
+    { 'z', group = 'fold' },
     {
       '<leader>b',
       group = 'buffers',
       expand = function() return require('which-key.extras').expand.buf() end,
     },
+    {
+      '<leader>w',
+      group = 'windows',
+      proxy = '<c-w>',
+      expand = function() return require('which-key.extras').expand.win() end,
+    },
+    -- better descriptions
+    { 'gx', desc = 'Open with system app' },
   }
 end
 
@@ -561,6 +580,11 @@ function M.setup_oil_keymaps()
       '<leader>o',
       function() require('oil').open_float() end,
       desc = 'Oil',
+    },
+    {
+      '<c-w><space>',
+      function() require('which-key').show { keys = '<c-w>', loop = true } end,
+      desc = 'Window Hydra Mode (which-key)',
     },
   }
 end

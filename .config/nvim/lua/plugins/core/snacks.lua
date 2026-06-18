@@ -5,30 +5,15 @@ return {
   ---
   ---@type snacks.Config
   opts = {
-    bigfile = { enabled = true },
+    bigfile = { enabled = false }, -- We use Fredrik Averpil's sollution
 
     dashboard = {
       enabled = true,
       preset = {
         keys = {
-          {
-            icon = ' ',
-            key = 'n',
-            desc = 'New File',
-            action = ':ene | startinsert',
-          },
-          {
-            icon = ' ',
-            key = 'r',
-            desc = 'Recent Files',
-            action = ":lua Snacks.dashboard.pick('oldfiles')",
-          },
-          {
-            icon = ' ',
-            key = 's',
-            desc = 'Restore Session',
-            section = 'session',
-          },
+          { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
+          { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
           {
             icon = ' ',
             key = 'c',
@@ -63,11 +48,28 @@ return {
 
     explorer = { enabled = true },
 
-    indent = { enabled = true },
+    indent = { enabled = false },
 
     input = { enabled = true },
 
-    picker = { enabled = true },
+    picker = {
+      enabled = true,
+
+      win = {
+        -- input window
+        input = {
+          keys = {
+            -- disable the default keybinds
+            ['<M-i>'] = false,
+            ['<M-h>'] = false,
+
+            ['<c-r>h'] = { 'toggle_hidden', mode = { 'i', 'n' } },
+            ['<c-r>i'] = { 'toggle_ignored', mode = { 'i', 'n' } },
+            ['g?'] = 'toggle_help_input',
+          },
+        },
+      },
+    },
 
     notifier = { enabled = true },
 
@@ -82,14 +84,7 @@ return {
     words = { enabled = true },
   },
 
-  keys = function()
-    ---@type table[table]
-    local snacks_keymaps = require('config.keymaps').setup_snacks_keymaps()
+  keys = require('config.keymaps').setup_snacks_keymaps(),
 
-    local merged_keymaps = {}
-    for _, keymap in ipairs(snacks_keymaps) do
-      table.insert(merged_keymaps, keymap)
-    end
-    return merged_keymaps
-  end,
+  init = function() vim.g.snacks_animate = false end,
 }

@@ -120,27 +120,12 @@ return {
 
       {
         'folke/lazydev.nvim',
+        ft = "lua",
+        cmd = 'LazyDev',
 
         opts = {
           library = {
-
-            -- Library paths can be absolute
-            -- "~/projects/my-awesome-lib",
-
-            -- Or relative, which means they will be resolved from the plugin dir.
-            'lazy.nvim',
-            'neotest',
-            'plenary',
-
-            -- It can also be a table with trigger words / mods
-            -- Only load luvit types when the `vim.uv` word is found
             { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-
-            -- always load the LazyVim library
-            -- "LazyVim",
-
-            -- Only load the lazyvim library when the `LazyVim` global is found
-            { path = 'LazyVim', words = { 'LazyVim' } },
             { path = 'snacks.nvim', words = { 'Snacks' } },
             { path = 'lazy.nvim', words = { 'LazyVim' } },
           },

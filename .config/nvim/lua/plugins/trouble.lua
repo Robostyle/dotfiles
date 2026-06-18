@@ -5,11 +5,21 @@
 
 return {
   'folke/trouble.nvim',
-  enabled = false,
   lazy = true,
+  cmd = { 'Trouble' },
+
+  opts = {
+    modes = {
+      lsp = {
+        win = { position = 'right' },
+      },
+    },
+  },
+
+  keys = require('config.keymaps').setup_trouble_keymaps(),
+
   dependencies = {
     -- icons supported via mini-icons.lua
-
     {
       'nvim-lualine/lualine.nvim',
       opts = {
@@ -17,8 +27,4 @@ return {
       },
     },
   },
-
-  opts = {},
-
-  keys = require('config.keymaps').setup_trouble_keymaps(),
 }

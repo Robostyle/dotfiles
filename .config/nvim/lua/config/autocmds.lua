@@ -1,9 +1,7 @@
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
-local function augroup(name)
-  return vim.api.nvim_create_augroup('lazyvim_' .. name, { clear = true })
-end
+local function augroup(name) return vim.api.nvim_create_augroup('lazyvim_' .. name, { clear = true }) end
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -28,9 +26,7 @@ vim.api.nvim_create_autocmd('BufReadPost', {
   callback = function(event)
     local exclude = { 'gitcommit' }
     local buf = event.buf
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
-      return
-    end
+    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then return end
     vim.b[buf].lazyvim_last_loc = true
     local mark = vim.api.nvim_buf_get_mark(buf, '"')
     local lcount = vim.api.nvim_buf_line_count(buf)
