@@ -85,8 +85,8 @@ layout {
             pane {y "50%"; x "50%"; }
         }
         floating_panes max_panes=2 {
-            pane { x "5%"; y "5%"; width "45%"; height "90%"; }
-            pane { x "50%"; y "5%"; width "45%"; height "90%"; }
+            pane { x "3%"; y "5%"; width "45%"; height "90%"; }
+            pane { x "53%"; y "5%"; width "45%"; height "90%"; }
         }
         floating_panes max_panes=3 {
             pane { y "55%"; width "45%"; height "45%"; }
