@@ -1,5 +1,5 @@
 function hypr
-    if uwsm check may-start; and uwsm select
-        exec uwsm start default
+    if uwsm check may-start
+        exec uwsm start hyprland.desktop
     end
 end

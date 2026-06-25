@@ -40,18 +40,20 @@ local menu = "walker"
 --
 hl.on("hyprland.start", function()
 	hl.exec_cmd("qs -c noctalia-shell")
-	hl.exec_cmd("dbus-update-activation-environment --all")
 	hl.exec_cmd("hyprpolkitagent")
-	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
-  hl.exec_cmd("wl-paste --primary --watch wl-copy")
-  hl.exec_cmd("cursor-clip --daemon")
-	hl.exec_cmd("hypridle")
-	hl.exec_cmd("elephant")
-	hl.exec_cmd("walker --gapplication-service")
-	hl.exec_cmd(terminal)
-	hl.exec_cmd(browser)
-	hl.exec_cmd("coolercontrol --disable-gpu")
-	hl.exec_cmd("gdbus wait --session org.kde.StatusNotifierWatcher; ope/nrgb --startminimized --profile Main")
+
+	hl.exec_cmd("uwsm app -- gnome-keyring-daemon --start --components=secrets")
+	hl.exec_cmd("uwsm app -- wl-paste --primary --watch wl-copy")
+	hl.exec_cmd("uwsm app -- cursor-clip --daemon")
+	hl.exec_cmd("uwsm app -- hypridle --config $HOME/.config/hypr/hypridle-hyprland.conf")
+	hl.exec_cmd("uwsm app -- elephant")
+	hl.exec_cmd("uwsm app -- walker --gapplication-service")
+	hl.exec_cmd("uwsm app -- " .. terminal)
+	hl.exec_cmd("uwsm app -- " .. browser)
+	hl.exec_cmd("uwsm app -- coolercontrol --disable-gpu")
+	hl.exec_cmd(
+		"gdbus wait --session org.kde.StatusNotifierWatcher && uwsm app -p TimeoutStopSec=2s -- openrgb --startminimized --profile Main"
+	)
 end)
 
 -------------------------------
@@ -106,7 +108,7 @@ hl.config({
 
 		layout = "scrolling",
 
-    no_focus_fallback = true,
+		no_focus_fallback = true,
 
 		snap = {
 			enabled = true,
@@ -282,17 +284,16 @@ hl.device({
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + ALT + U", hl.dsp.exec_cmd("hyprlock"))
+
+hl.bind(mainMod .. " + CTRL + L", hl.dsp.layout("swapcol r"))
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("uwsm app -- " .. terminal))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(
-	mainMod .. " + M",
-	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
-)
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("uwsm app -- " .. fileManager))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("uwsm app -- " .. browser))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cursor-clip"))
 
- --daemon
+--daemon
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
@@ -320,12 +321,19 @@ hl.bind(mainMod .. " + R", hl.dsp.layout("colresize +conf"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.layout("colresize -conf"))
 hl.bind(mainMod .. " + COMMA", hl.dsp.layout("consume"))
 hl.bind(mainMod .. " + PERIOD", hl.dsp.layout("expel"))
-hl.bind(mainMod .. " + C", hl.dsp.layout("focus"))
+hl.bind(mainMod .. " + C", hl.dsp.layout("center"))
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
+-- Screenshots
+hl.bind(
+	"Print",
+	hl.dsp.exec_cmd(
+		'grim -g "$(slurp)" -t ppm - | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date "+%Y%m%d-%H:%M:%S").png'
+	)
+)
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind(
 	"XF86AudioRaiseVolume",
@@ -396,6 +404,12 @@ hl.window_rule({
 --     no_anim = true,
 -- })
 -- overlayLayerRule:set_enabled(false)
+
+hl.window_rule({
+
+	match = { class = "com.gabm.satty" },
+	float = true,
+})
 
 -- Hyprland-run windowrule
 hl.window_rule({
