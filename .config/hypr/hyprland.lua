@@ -19,6 +19,22 @@ hl.monitor({
 	vrr = true,
 })
 
+hl.monitor({
+	output = "DP-3",
+	mode = "preferred",
+	position = "auto",
+	scale = "1.25",
+	vrr = true,
+})
+
+hl.monitor({
+	output = "eDP-1",
+	mode = "preferred",
+	position = "auto",
+	scale = "1.25",
+	vrr = true,
+})
+
 ---------------------
 ---- MY PROGRAMS ----
 ---------------------
@@ -166,9 +182,9 @@ hl.animation({ leaf = "layersIn", enabled = true, speed = 4, bezier = "easeOutQu
 hl.animation({ leaf = "layersOut", enabled = true, speed = 1.5, bezier = "linear", style = "fade" })
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 1.79, bezier = "almostLinear" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 1.39, bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.21, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 1.94, bezier = "almostLinear", style = "slidefadevert" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.21, bezier = "almostLinear", style = "slidefadevert" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "slidefadevert" })
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
@@ -300,18 +316,26 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen("fullscreen", "toggle"))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
 
--- Move focus with mainMod + arrow keys
+-- Move focus with mainMod
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
+
+-- Move window to workspace
+hl.bind(mainMod .. " + ALT + SHIFT + H", hl.dsp.window.move({ monitor = "l" }))
+hl.bind(mainMod .. " + ALT + SHIFT + L", hl.dsp.window.move({ monitor = "r" }))
+
+-- Move workspace to monitor
+hl.bind(mainMod .. " + ALT + H", hl.dsp.workspace.move({ monitor = "l" }))
+hl.bind(mainMod .. " + ALT + L", hl.dsp.workspace.move({ monitor = "r" }))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
 	local key = i % 10 -- 10 maps to key 0
 	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-	hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+	hl.bind(mainMod .. " + ALT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
 -- Scrolling layout binds
