@@ -1,0 +1,61 @@
+require("lazyload").on_vim_enter(function()
+  vim.pack.add({
+    { src = "https://github.com/NicolasGB/jj.nvim" },
+  })
+
+  require("jj").setup({
+    diff = {
+      backend = "codediff",
+    },
+  })
+
+  local annotate = require("jj.annotate")
+  vim.keymap.set("n", "<leader>ja", function()
+    annotate.line()
+  end, { desc = "JJ Annotate Line" })
+  vim.keymap.set("n", "<leader>jA", function()
+    annotate.file()
+  end, { desc = "JJ Annotate File" })
+
+  local diff = require("jj.diff")
+  vim.keymap.set("n", "<leader>jdf", function()
+    diff.open_vdiff()
+  end, { desc = "JJ diff current buffer" })
+  vim.keymap.set("n", "<leader>jdF", function()
+    diff.open_hdiff()
+  end, { desc = "JJ hdiff current buffer" })
+
+  local picker = require("jj.picker")
+  vim.keymap.set("n", "<leader>jgj", function()
+    picker.status()
+  end, { desc = "JJ Picker status" })
+  vim.keymap.set("n", "<leader>jgh", function()
+    picker.file_history()
+  end, { desc = "JJ Picker history" })
+  vim.keymap.set("n", "<leader>jgc", function()
+    picker.conflict()
+  end, { desc = "JJ Picker conflicts" })
+  vim.keymap.set("n", "<leader>jgs", function()
+    picker.conflict_sections()
+  end, { desc = "JJ Picker conflict sections" })
+
+  local cmd = require("jj.cmd")
+  vim.keymap.set("n", "<leader>jd", cmd.describe, { desc = "JJ describe" })
+  vim.keymap.set("n", "<leader>jl", cmd.log, { desc = "JJ log" })
+  vim.keymap.set("n", "<leader>je", cmd.edit, { desc = "JJ edit" })
+  vim.keymap.set("n", "<leader>jn", cmd.new, { desc = "JJ new" })
+  vim.keymap.set("n", "<leader>js", cmd.status, { desc = "JJ status" })
+  vim.keymap.set("n", "<leader>sj", cmd.squash, { desc = "JJ squash" })
+  vim.keymap.set("n", "<leader>ju", cmd.undo, { desc = "JJ undo" })
+  vim.keymap.set("n", "<leader>jy", cmd.redo, { desc = "JJ redo" })
+  vim.keymap.set("n", "<leader>jr", cmd.rebase, { desc = "JJ rebase" })
+  vim.keymap.set("n", "<leader>jbc", cmd.bookmark_create, { desc = "JJ bookmark create" })
+  vim.keymap.set("n", "<leader>jbd", cmd.bookmark_delete, { desc = "JJ bookmark delete" })
+  vim.keymap.set("n", "<leader>jbm", cmd.bookmark_move, { desc = "JJ bookmark move" })
+  vim.keymap.set("n", "<leader>jts", cmd.tag_set, { desc = "JJ tag set" })
+  vim.keymap.set("n", "<leader>jtd", cmd.tag_delete, { desc = "JJ tag delete" })
+  vim.keymap.set("n", "<leader>jtp", cmd.tag_push, { desc = "JJ tag push" })
+  vim.keymap.set("n", "<leader>ja", cmd.abandon, { desc = "JJ abandon" })
+  vim.keymap.set("n", "<leader>jf", cmd.fetch, { desc = "JJ fetch" })
+  vim.keymap.set("n", "<leader>jp", cmd.push, { desc = "JJ push" })
+end)
