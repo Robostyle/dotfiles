@@ -1,15 +1,16 @@
 layout {
-    tab_template name="ui" {
     pane size=1 borderless=true {
-        plugin location="compact-bar"
+      plugin location="compact-bar"
     }
-    children
+    pane
+
+    tab_template name="ui" {
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+        children
     }
     
-    ui {
-        pane
-    }
-
     swap_tiled_layout name="vertical" {
         ui max_panes=4 {
             pane split_direction="vertical" {
@@ -94,10 +95,10 @@ layout {
             pane { x "50%"; y "1%"; width "45%"; }
         }
         floating_panes max_panes=4 {
-        pane { x "1%"; y "55%"; width "45%"; height "45%"; }
-        pane { x "50%"; y "55%"; width "45%"; height "45%"; }
-        pane { x "1%"; y "1%"; width "45%"; height "45%"; }
-        pane { x "50%"; y "1%"; width "45%"; height "45%"; }
-    }
+            pane { x "1%"; y "55%"; width "45%"; height "45%"; }
+            pane { x "50%"; y "55%"; width "45%"; height "45%"; }
+            pane { x "1%"; y "1%"; width "45%"; height "45%"; }
+            pane { x "50%"; y "1%"; width "45%"; height "45%"; }
+        }
     }
 }
