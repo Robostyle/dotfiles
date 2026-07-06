@@ -8,20 +8,23 @@ vim.pack.add({
   { src = "https://github.com/folke/tokyonight.nvim", version = vim.version.range("*") },
   { src = "https://github.com/catppuccin/nvim", name = "catppuccin", version = vim.version.range("*") },
   { src = "https://github.com/savq/melange-nvim" },
+  { src = "https://github.com/rebelot/kanagawa.nvim" },
 }, { load = false })
 
 vim.g.bones_compat = 1 -- use built-in vim highlight API, not lush.nvim
 
 -- Set colorscheme.
 do
+  local colorSchemeName = "kanagawabones"
+
   local function set_dark()
     vim.o.background = "dark"
-    vim.cmd.colorscheme("zenbones")
+    vim.cmd.colorscheme(colorSchemeName)
   end
 
   local function set_light()
     vim.o.background = "light"
-    vim.cmd.colorscheme("zenbones")
+    vim.cmd.colorscheme(colorSchemeName)
   end
 
   if vim.o.background == "light" then

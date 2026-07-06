@@ -4,6 +4,11 @@ require("lazyload").on_vim_enter(function()
     { src = "https://github.com/artemave/workspace-diagnostics.nvim" },
   })
 
+  -- Remove Neovim's default gr* mappings (see: https://neovim.io/doc/user/lsp/#_defaults)
+  for _, key in ipairs({ "grr", "gri", "grt", "gra", "grx", "grn", "gO" }) do
+    pcall(vim.keymap.del, "n", key)
+  end
+
   -- Extend LSP capabilities with blink.cmp completions for all servers.
   vim.lsp.config("*", {
     capabilities = require("blink.cmp").get_lsp_capabilities(),
@@ -93,9 +98,14 @@ require("lazyload").on_vim_enter(function()
       vim.keymap.set("x", "<M-i>", function()
         vim.lsp.buf.selection_range(-1)
       end, { buffer = buf, desc = "Shrink selection (LSP)" })
-      vim.keymap.set("n", "<leader>uh", function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
-      end, { buffer = buf, desc = "Toggle inlay hints" })
+
+      vim.keymap.set("n", "<leader>cl", function()
+        Snacks.picker.lsp_config()
+      end, { desc = "Lsp Info" })
+      if vim.lsp.inlay_hint then
+        Snacks.toggle.inlay_hints():map("<leader>uh")
+      end
+
       vim.keymap.set("n", "<leader>ul", function()
         local enabled = not vim.lsp.codelens.is_enabled()
         vim.lsp.codelens.enable(enabled)

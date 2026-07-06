@@ -17,8 +17,8 @@ _G.Config = {
   use_nvim_treesitter = true,
 
   -- diffing
-  use_diffview = false,
-  use_codediff = true,
+  use_diffview = true,
+  use_codediff = false,
 
   -- lsp
   use_workspace_diagnostics_plugin = false,
@@ -36,4 +36,4 @@ require("keymaps")
 
 -- Experimental: ui2 message/cmdline redesign (:h ui2)
 -- Avoids "Press ENTER" prompts, highlights cmdline, pager as buffer.
--- require("vim._core.ui2").enable({})
+require("vim._core.ui2").enable()

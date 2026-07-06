@@ -102,22 +102,9 @@ Snacks.setup({
 
   explorer = { enabled = true },
 
-  lazygit = {
-    enabled = true,
-    configure = true,
-    config = {
-      os = { editPreset = "nvim-remote" },
-      gui = { nerdFontsVersion = "3" },
-      git = { overrideGpg = true },
-    },
-    win = {
-      keys = {
-        esc_esc = { "<Esc><Esc>", "hide", mode = { "n", "t" }, desc = "Hide LazyGit" },
-      },
-    },
-  },
+  lazygit = { enabled = false },
 
-  terminal = { enabled = true },
+  terminal = { enabled = false },
 
   quickfile = { enabled = true },
 
@@ -149,12 +136,12 @@ local exclude = {
 }
 
 -- Misc
-vim.keymap.set("n", "<leader><leader>", function()
+vim.keymap.set("n", "<leader><space>", function()
   Snacks.picker.smart({
     layout = { hidden = { "preview" } },
     multi = { "buffers", "files" },
     hidden = true,
-    ignored = true,
+    ignored = false,
     exclude = exclude,
     formatters = { file = { truncate = 100 } },
   })
@@ -163,20 +150,23 @@ vim.keymap.set("n", "<leader>/", function()
   Snacks.picker.grep({
     layout = { hidden = { "preview" } },
     hidden = true,
-    ignored = true,
+    ignored = false,
     exclude = exclude,
   })
 end, { desc = "Grep" })
 vim.keymap.set("n", "<leader>:", function()
   Snacks.picker.command_history()
 end, { desc = "Command History" })
+vim.keymap.set("n", "<leader>n", function()
+  Snacks.picker.notifications()
+end, { desc = "Notification History" })
 
 -- Explorer
 vim.keymap.set("n", "<leader>e", function()
-  Snacks.explorer.open({ hidden = true, ignored = true, exclude = { ".DS_Store" } })
+  Snacks.explorer.open({ hidden = true, ignored = false, exclude = { ".DS_Store" } })
 end, { desc = "Explorer" })
 vim.keymap.set("n", "<leader>E", function()
-  Snacks.explorer.reveal({ hidden = true, ignored = true })
+  Snacks.explorer.reveal({ hidden = true, ignored = false })
 end, { desc = "Explorer (reveal buffer)" })
 
 -- LSP (via picker)
@@ -321,6 +311,9 @@ vim.keymap.set("n", "<leader>sgb", function()
 end, { desc = "Git branches" })
 
 -- UI
+vim.keymap.set("n", "<leader>uC", function()
+  Snacks.picker.colorschemes()
+end, { desc = "Colorschemes" })
 vim.keymap.set("n", "<leader>uz", function()
   Snacks.zen.zen()
 end, { desc = "Toggle Zen mode" })
@@ -328,14 +321,28 @@ vim.keymap.set("n", "<leader>un", function()
   Snacks.notifier.show_history()
 end, { desc = "Notification history" })
 
--- Terminal
--- Both <C-/> and <C-_> are mapped due to how terminal emulators interpret control characters.
-local function floating_term()
-  Snacks.terminal.toggle({ "zsh" }, { cwd = vim.fn.getcwd() })
-end
-vim.keymap.set({ "n", "i", "t", "v" }, "<C-/>", floating_term, { desc = "Toggle floating terminal" })
-vim.keymap.set({ "n", "i", "t", "v" }, "<C-_>", floating_term, { desc = "Toggle floating terminal" })
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-vim.keymap.set("n", "<leader>ft", function()
-  Snacks.terminal()
-end, { desc = "Terminal" })
+-- Buffers
+vim.keymap.set("n", "<leader>,", function()
+  Snacks.picker.buffers()
+end, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>bd", function()
+  Snacks.bufdelete()
+end, { desc = "Delete Buffer" })
+vim.keymap.set("n", "<leader>bo", function()
+  Snacks.bufdelete.other()
+end, { desc = "Delete Other Buffers" })
+vim.keymap.set("n", "<leader>bi", function()
+  Snacks.bufdelete.invisible()
+end, { desc = "Delete Invisible Buffers" })
+
+-- Toggles, TODO: move these?
+Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+Snacks.toggle.diagnostics():map("<leader>ud")
+Snacks.toggle.line_number():map("<leader>ul")
+Snacks.toggle.animate():map("<leader>ua")
+Snacks.toggle.indent():map("<leader>ug")
+Snacks.toggle.scroll():map("<leader>uS")
+Snacks.toggle.profiler():map("<leader>dpp")
+Snacks.toggle.profiler_highlights():map("<leader>dph")

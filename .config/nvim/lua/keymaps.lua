@@ -28,26 +28,14 @@ map_multiple("v", down_keys, ":m '>+1<CR>gv=gv", { desc = "Move selection down",
 map_multiple("v", up_keys, ":m '<-2<CR>gv=gv", { desc = "Move selection up", silent = true })
 
 -- Buffers
-vim.keymap.set("n", "<leader>`", "<C-^>", { desc = "Alternate buffers" })
-vim.keymap.set("n", "<leader>bN", "<cmd>enew<cr>", { desc = "New buffer" })
-for _, key in ipairs({ "<S-l>", "<leader>bn", "]b" }) do
-  vim.keymap.set("n", key, "<cmd>bnext<cr>", { desc = "Next buffer" })
-end
-for _, key in ipairs({ "<S-h>", "<leader>bp", "[b" }) do
+for _, key in ipairs({ "<S-h>", "[b" }) do
   vim.keymap.set("n", key, "<cmd>bprevious<cr>", { desc = "Prev buffer" })
 end
+for _, key in ipairs({ "<S-l>", "]b" }) do
+  vim.keymap.set("n", key, "<cmd>bnext<cr>", { desc = "Next buffer" })
+end
+vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other buffer" })
 vim.keymap.set("n", "<leader>bd", "<cmd>bd %<cr>", { desc = "Delete buffer" })
-vim.keymap.set("n", "<leader>bo", function()
-  local visible = {}
-  for _, win in pairs(vim.api.nvim_list_wins()) do
-    visible[vim.api.nvim_win_get_buf(win)] = true
-  end
-  for _, buf in pairs(vim.api.nvim_list_bufs()) do
-    if not visible[buf] then
-      vim.api.nvim_buf_delete(buf, {})
-    end
-  end
-end, { desc = "Close all other buffers" })
 vim.keymap.set("n", "<leader>by", function()
   local path = vim.fn.fnamemodify(vim.fn.expand("%"), ":.")
   vim.fn.setreg("+", path)
@@ -149,4 +137,3 @@ vim.keymap.set("n", "<leader>uF", function()
   vim.wo.foldmethod = "expr"
   vim.notify("Foldmethod set to expr", vim.log.levels.INFO)
 end, { desc = "Reset to expr folding", silent = true })
-
