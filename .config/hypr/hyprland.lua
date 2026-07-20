@@ -159,6 +159,16 @@ hl.config({
 	},
 })
 
+-- Group settings
+hl.config({
+	group = {
+		groupbar = {
+			font_weight_active = "bold",
+			stacked = true,
+		},
+	},
+})
+
 -- Default curves and animations, see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/
 hl.curve("easeOutQuint", { type = "bezier", points = { { 0.23, 1 }, { 0.32, 1 } } })
 hl.curve("easeInOutCubic", { type = "bezier", points = { { 0.65, 0.05 }, { 0.36, 1 } } })
@@ -297,20 +307,26 @@ hl.device({
 ---- KEYBINDINGS ----
 ---------------------
 
+hl.config({
+	binds = {
+		workspace_back_and_forth = true,
+	},
+})
+
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
+
+hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + ALT + U", hl.dsp.exec_cmd("hyprlock"))
 
 hl.bind(mainMod .. " + CTRL + L", hl.dsp.layout("swapcol r"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("uwsm app -- " .. terminal))
-hl.bind(mainMod .. " + Q", hl.dsp.window.close())
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("uwsm app -- " .. fileManager))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("uwsm app -- " .. fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("uwsm app -- " .. browser))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("cursor-clip"))
 
---daemon
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen("fullscreen", "toggle"))
@@ -358,6 +374,13 @@ hl.bind(
 		'grim -g "$(slurp)" -t ppm - | satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date "+%Y%m%d-%H:%M:%S").png'
 	)
 )
+hl.bind(
+	"SHIFT + Print",
+	hl.dsp.exec_cmd(
+		[[hyprctl activewindow -j | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | grim -g - - | satty --filename -]]
+	)
+)
+
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind(
 	"XF86AudioRaiseVolume",
@@ -387,6 +410,10 @@ hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+
+-- Mouse dragging & resizing
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true, drag = true })
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
@@ -429,9 +456,17 @@ hl.window_rule({
 -- })
 -- overlayLayerRule:set_enabled(false)
 
+local function percent_to_pixels(p_width, p_height)
+	local monitor = hl.get_monitor("current") or { width = 1920, height = 1080 }
+	local x = math.floor(monitor.width * (p_width / 100))
+	local y = math.floor(monitor.height * (p_height / 100))
+	return string.format("%d %d", x, y)
+end
+
 hl.window_rule({
 
 	match = { class = "com.gabm.satty" },
+	max_size = percent_to_pixels(80, 70),
 	float = true,
 })
 
