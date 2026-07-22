@@ -35,10 +35,10 @@ end
 
 ## Useful aliases
 # Replace ls with eza
-alias ls='eza --color=always --group-directories-first --icons' # preferred listing
-alias la='eza -a --color=always --group-directories-first --icons' # all files and dirs
-alias ll='eza -l --color=always --group-directories-first --icons' # long format
-alias lt='eza -aT --color=always --group-directories-first --icons' # tree listing
+alias ls='eza --color=always --group-directories-first --icons=auto' # preferred listing
+alias la='eza -a --color=always --group-directories-first --icons=auto' # all files and dirs
+alias ll='eza -l --color=always --group-directories-first --icons=auto' # long format
+alias lt='eza -aT --color=always --group-directories-first --icons=auto' # tree listing
 alias l.="eza -a | grep -e '^\.'" # show only dotfiles
 
 # Common use
@@ -73,7 +73,13 @@ set -gx VISUAL /usr/bin/nvim
 __starship
 __zoxide
 __niri
+load_pyenv
 
 if test -e ~/.config/fish/secrets.fish
     source ~/.config/fish/secrets.fish
 end
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /home/rsuijker/.lmstudio/bin
+# End of LM Studio CLI section
+
