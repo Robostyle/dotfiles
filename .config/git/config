@@ -52,6 +52,3 @@
 
 [fetch]
     prune = true
-
-[includeIf "gitdir:~/work/**"]
-    path = ~/.config/git/config_work
