@@ -14,6 +14,7 @@ require("lazyload").on_vim_enter(function()
     "bash-language-server", -- bash
     "biome", -- json
     "clangd", -- C/C++
+    "codelldb", -- rust
     "debugpy", -- python
     "dockerfile-language-server", -- docker
     "hadolint", -- docker
@@ -25,6 +26,7 @@ require("lazyload").on_vim_enter(function()
     "prettier", -- typescript/javascript
     "ruff", -- python
     "rumdl", -- markdown
+    "rust-analyzer", -- rust
     "shellcheck", -- bash (bashls runs it itself; not a nvim-lint linter)
     "shfmt", -- bash
     "stylua", -- lua

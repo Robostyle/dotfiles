@@ -25,6 +25,7 @@ require("lazyload").on_vim_enter(function()
     "lua_ls",
     "nil_ls",
     "ruff",
+    "rust_analyzer",
     "superhtml",
     "taplo",
     "ts_query_ls",
