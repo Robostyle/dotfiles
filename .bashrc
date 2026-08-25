@@ -15,16 +15,16 @@ alias zi="zoxide"
 
 # Eza
 if command -v eza &>/dev/null; then
-  alias ls='eza --color=always --group-directories-first --icons'
-  alias ll='eza -la --icons --octal-permissions --group-directories-first'
-  alias l='eza -bGF --header --git --color=always --group-directories-first --icons'
-  alias llm='eza -lbGd --header --git --sort=modified --color=always --group-directories-first --icons'
-  alias la='eza --long --all --group --group-directories-first'
-  alias lx='eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale --color=always --group-directories-first --icons'
+	alias ls='eza --color=always --group-directories-first --icons=auto'
+	alias ll='eza -la --icons=auto --octal-permissions --group-directories-first'
+	alias l='eza -bGF --header --git --color=always --group-directories-first --icons=auto'
+	alias llm='eza -lbGd --header --git --sort=modified --color=always --group-directories-first --icons=auto'
+	alias la='eza --long --all --group --group-directories-first'
+	alias lx='eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale --color=always --group-directories-first --icons=auto'
 
-  alias lS='eza -1 --color=always --group-directories-first --icons'
-  alias lt='eza --tree --level=2 --color=always --group-directories-first --icons'
-  alias l.="eza -a | grep -E '^\.'"
+	alias lS='eza -1 --color=always --group-directories-first --icons=auto'
+	alias lt='eza --tree --level=2 --color=always --group-directories-first --icons=auto'
+	alias l.="eza -a | grep -E '^\.'"
 fi
 
 alias '..'='cd ..'
@@ -36,7 +36,7 @@ alias '.....'.='cd ../../../../..'
 function check_command_exist {
 	local cmd=$1
 	local init=$2
-	if command  -v $cmd &> /dev/null ; then
+	if command -v $cmd &>/dev/null; then
 		eval "$($init)"
 	else
 		echo "$cmd not found, install please!"
