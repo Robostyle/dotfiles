@@ -11,7 +11,7 @@
 local defaults = require("hyprland/defaults")
 
 hl.on("hyprland.start", function()
-	hl.exec_cmd("qs -c noctalia-shell")
+	hl.exec_cmd("noctalia")
 	hl.exec_cmd("hyprpolkitagent")
 
 	hl.exec_cmd("uwsm app -- gnome-keyring-daemon --start --components=secrets")
@@ -22,8 +22,4 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("uwsm app -- walker --gapplication-service")
 	hl.exec_cmd("uwsm app -- " .. defaults.programs.terminal)
 	hl.exec_cmd("uwsm app -- " .. defaults.programs.browser)
-	hl.exec_cmd("uwsm app -- coolercontrol --disable-gpu")
-	hl.exec_cmd(
-		"gdbus wait --session org.kde.StatusNotifierWatcher && uwsm app -p TimeoutStopSec=2s -- openrgb --startminimized --profile Main"
-	)
 end)

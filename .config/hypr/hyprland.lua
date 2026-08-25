@@ -6,12 +6,23 @@
 --       special workspace
 --       go over the variable section again for settings
 
+local utils = require("hyprland.utils.require_optional")
+
 require("hyprland.binds")
 require("hyprland.environment")
 require("hyprland.autostart")
 require("hyprland.monitors")
 
 -- TODO: add hyprland.custom files to add extra autostart, monitors, and binds.
+
+utils.require_optional("hyprland.custom.monitors")
+utils.require_optional("hyprland.custom.autostart")
+
+hl.config({
+	debug = {
+		disable_logs = false,
+	},
+})
 
 -----------------------
 ----- PERMISSIONS -----
@@ -166,8 +177,6 @@ hl.config({
 	scrolling = {
 		fullscreen_on_one_column = false,
 
-		follow_min_visible = 0.1,
-
 		wrap_swapcol = false,
 		wrap_focus = false,
 	},
@@ -245,6 +254,12 @@ hl.device({
 -- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
 -- and https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
 
+hl.window_rule({
+	match = { class = "dev.noctalia.Noctalia" },
+	float = true,
+	size = { 1080, 920 },
+})
+
 -- Example window rules that are useful
 
 local suppressMaximizeRule = hl.window_rule({
@@ -269,6 +284,17 @@ hl.window_rule({
 	},
 
 	no_focus = true,
+})
+
+hl.layer_rule({
+	name = "noctalia",
+	match = {
+		namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$",
+	},
+	no_anim = true,
+	ignore_alpha = 0.5,
+	blur = true,
+	blur_popups = true,
 })
 
 -- Layer rules also return a handle.
@@ -300,4 +326,12 @@ hl.window_rule({
 
 	move = "20 monitor_h-120",
 	float = true,
+})
+
+hl.window_rule({
+	name = "kicad dialogs",
+	match = { class = "kicad", float = true },
+	size = { "monitor_w * 0.5", "monitor_h * 0.75" },
+	persistent_size = false,
+	center = true,
 })
