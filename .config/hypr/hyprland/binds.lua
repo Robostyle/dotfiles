@@ -14,9 +14,6 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 
--- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind(mainMod .. " + ALT + U", hl.dsp.exec_cmd("hyprlock"))
-
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("uwsm app -- " .. defaults.programs.terminal))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("uwsm app -- " .. defaults.programs.fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("uwsm app -- " .. defaults.programs.browser))
@@ -98,6 +95,7 @@ hl.bind(mainMod .. "+ Space", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
 hl.bind(mainMod .. "+ ALT + S", hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
 hl.bind(mainMod .. "+ ALT + COMMA", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
 hl.bind("ALT + Tab", hl.dsp.exec_cmd(ipc .. "window-switcher"))
+hl.bind(mainMod .. " + ALT + U", hl.dsp.exec_cmd(ipc .. "session lock"))
 
 -- Media keys
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. "volume-up"))

@@ -49,15 +49,8 @@ hl.config({
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
 	general = {
-		gaps_in = 8,
-		gaps_out = 16,
-
-		border_size = 2,
-
-		col = {
-			active_border = { colors = { "rgba(957fb8ee)", "rgba(7e9cd8ee)" }, angle = 45 },
-			inactive_border = "rgba(54546daa)",
-		},
+		gaps_in = 5,
+		gaps_out = 10,
 
 		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
 		resize_on_border = false,
@@ -75,24 +68,20 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 10,
+		rounding = 20,
 		rounding_power = 2,
-
-		-- Change transparency of focused and unfocused windows
-		active_opacity = 1.0,
-		inactive_opacity = 1.0,
 
 		shadow = {
 			enabled = true,
 			range = 4,
 			render_power = 3,
-			color = 0x16161d1a,
+			color = 0xee1a1a1a,
 		},
 
 		blur = {
 			enabled = true,
 			size = 3,
-			passes = 1,
+			passes = 2,
 			vibrancy = 0.1696,
 		},
 	},
@@ -330,8 +319,22 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "kicad dialogs",
-	match = { class = "kicad", float = true },
+	match = {
+		class = "kicad",
+		float = true,
+	},
+
 	size = { "monitor_w * 0.5", "monitor_h * 0.75" },
+
+	float = true,
+	center = true,
 	persistent_size = false,
+})
+
+hl.window_rule({
+	name = "Bitwarded login",
+	match = { class = "^brave-.*Default$" },
+
+	float = true,
 	center = true,
 })
