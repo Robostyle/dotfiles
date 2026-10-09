@@ -17,13 +17,6 @@ switch (uname)
 	end
 end
 
-if test $is_arch = "true"
-	echo "Is arch Linux"
-end
-if test $is_darwin = "true"
-	echo "Is OSX"
-end
-
 # Initialize Homebrew environment dynamically (macOS only)
 if test $is_darwin = "true"
     set -l brew_path /opt/homebrew/bin/brew
